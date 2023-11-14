@@ -9,9 +9,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private CapsuleCollider _col;
 
-    [SerializeField] Transform _cameraPos;
+    [SerializeField] Transform _cameraTf;
 
-    [SerializeField] float _moveSpeed = 2;
+    [SerializeField] float _moveSpeed = GameDefine.PlayerSpeed;
     [SerializeField] float _sensitiveY = 2;
     [SerializeField] float _sensitiveX = 2;
 
@@ -48,14 +48,14 @@ public class PlayerController : MonoBehaviour
         // Rotate X
         float xRotateSize = -Input.GetAxis("Mouse Y") * _sensitiveX;
         _cameraXRotate = Mathf.Clamp(_cameraXRotate + xRotateSize, -80, 80);
-        _cameraPos.localEulerAngles = new Vector3(_cameraXRotate, 0, 0);
+        _cameraTf.localEulerAngles = new Vector3(_cameraXRotate, 0, 0);
     }
 
     void RayCheck()
     {
         RaycastHit hit;
-        Debug.DrawRay(_cameraPos.position, _cameraPos.forward * 5, Color.red);
-        if (Physics.Raycast(_cameraPos.position, _cameraPos.forward, out hit, 3))
+        Debug.DrawRay(_cameraTf.position, _cameraTf.forward * 5, Color.red);
+        if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, 3))
         {
             Item item = hit.transform.GetComponent<Item>();
             if(item)

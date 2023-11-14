@@ -8,6 +8,6 @@ public class Item : MonoBehaviour
     public string Name() => _name;
     public void GetItem()
     {
-
+        
     }
 }
