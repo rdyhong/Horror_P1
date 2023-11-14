@@ -27,11 +27,6 @@ public class PlayerController : MonoBehaviour
         _sensitiveY = GameDef.MOUSE_SENSITIVE_Y;
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         PlayerMove();
@@ -41,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMove()
     {
-        Vector3 nextStep = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
+        Vector3 nextStep = transform.forward * Input.GetAxis(GameDef.INPUT_AXIS_VERTICAL) + transform.right * Input.GetAxis(GameDef.INPUT_AXIS_HORIZONTAL);
         nextStep = Vector3.ClampMagnitude(nextStep, 1);
         nextStep = transform.position + nextStep * _moveSpeed * Time.deltaTime;
         _rb.MovePosition(nextStep);
@@ -50,12 +45,12 @@ public class PlayerController : MonoBehaviour
     void PlayerRotate()
     {
         // Rotate Y
-        float yRotateSize = Input.GetAxis("Mouse X") * _sensitiveY;
+        float yRotateSize = Input.GetAxis(GameDef.INPUT_AXIS_MOUSE_X) * _sensitiveY;
         float yRotate = transform.eulerAngles.y + yRotateSize;
         transform.eulerAngles = new Vector3(0, yRotate, 0);
 
         // Rotate X
-        float xRotateSize = -Input.GetAxis("Mouse Y") * _sensitiveX;
+        float xRotateSize = -Input.GetAxis(GameDef.INPUT_AXIS_MOUSE_Y) * _sensitiveX;
         _cameraXRotate = Mathf.Clamp(_cameraXRotate + xRotateSize, -80, 80);
         _cameraTf.localEulerAngles = new Vector3(_cameraXRotate, 0, 0);
     }

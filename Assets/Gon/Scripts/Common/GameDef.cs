@@ -9,7 +9,9 @@ public static class GameDef
     public static readonly float PLAYER_SPEED = 2;
     public static readonly float PLAYER_SIGHT_RAY_LENGTH = 2f;
 
-
-
     public static readonly string SINGLETON_PARENT_NAME = "Singleton";
+    public static readonly string INPUT_AXIS_VERTICAL = "Vertical";
+    public static readonly string INPUT_AXIS_HORIZONTAL = "Horizontal";
+    public static readonly string INPUT_AXIS_MOUSE_X = "Mouse X";
+    public static readonly string INPUT_AXIS_MOUSE_Y = "Mouse Y";
 }
