@@ -11,16 +11,25 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Transform _cameraTf;
 
-    [SerializeField] float _moveSpeed = GameDefine.PlayerSpeed;
-    [SerializeField] float _sensitiveY = 2;
-    [SerializeField] float _sensitiveX = 2;
+    [SerializeField] float _moveSpeed;
+    [SerializeField] float _sensitiveX;
+    [SerializeField] float _sensitiveY;
 
     private float _cameraXRotate = 0;
 
-    void Start()
+    private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
+
+        _moveSpeed = GameDef.PLAYER_SPEED;
+        _sensitiveX = GameDef.MOUSE_SENSITIVE_X;
+        _sensitiveY = GameDef.MOUSE_SENSITIVE_Y;
+    }
+
+    void Start()
+    {
+        
     }
 
     void Update()
@@ -54,13 +63,13 @@ public class PlayerController : MonoBehaviour
     void RayCheck()
     {
         RaycastHit hit;
-        Debug.DrawRay(_cameraTf.position, _cameraTf.forward * 5, Color.red);
-        if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, 3))
+        Debug.DrawRay(_cameraTf.position, _cameraTf.forward * GameDef.PLAYER_SIGHT_RAY_LENGTH, Color.red);
+        if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
         {
             Item item = hit.transform.GetComponent<Item>();
             if(item)
             {
-                Debug.Log(item.Name());
+                DebugUtil.Log(item.Name());
             }
         }
 
