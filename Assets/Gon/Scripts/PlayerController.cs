@@ -9,12 +9,15 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider _col;
 
     [SerializeField] Transform _cameraTf;
+    [SerializeField] Transform _handItemPosition;
 
     [SerializeField] float _moveSpeed;
     [SerializeField] float _sensitiveX;
     [SerializeField] float _sensitiveY;
 
     private float _cameraXRotate = 0;
+
+    Item _onHandItem = null;
 
     private void Awake()
     {
@@ -58,14 +61,23 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(_cameraTf.position, _cameraTf.forward * GameDef.PLAYER_SIGHT_RAY_LENGTH, Color.red);
-        if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Item item = hit.transform.GetComponent<Item>();
-            if(item)
+            if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
             {
-                DebugUtil.Log(item.Name());
+                Item item = hit.transform.GetComponent<Item>();
+                if (item != null && _onHandItem == null)
+                {
+                    _onHandItem = item;
+                    _onHandItem.Obtain(_handItemPosition);
+                }
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            _onHandItem.Dump();
+            _onHandItem = null;
+        }
     }
 }

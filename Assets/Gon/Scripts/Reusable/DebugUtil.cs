@@ -20,4 +20,10 @@ public static class DebugUtil
         Debug.LogError(log);
 #endif
     }
+    public static void LogAssert(bool condition, string log)
+    {
+#if UNITY_EDITOR
+        Debug.Assert(condition, log);
+#endif
+    }
 }
