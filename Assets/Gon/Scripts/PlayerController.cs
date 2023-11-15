@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,7 +21,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
 
-        _moveSpeed = GameDef.PLAYER_SPEED;
+        _moveSpeed = GameDef.PLAYER_BASE_SPEED;
         _sensitiveX = GameDef.MOUSE_SENSITIVE_X;
         _sensitiveY = GameDef.MOUSE_SENSITIVE_Y;
     }
@@ -51,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
         // Rotate X
         float xRotateSize = -Input.GetAxis(GameDef.INPUT_AXIS_MOUSE_Y) * _sensitiveX;
-        _cameraXRotate = Mathf.Clamp(_cameraXRotate + xRotateSize, -80, 80);
+        _cameraXRotate = Mathf.Clamp(_cameraXRotate + xRotateSize, GameDef.PLAYER_HEAD_ROTATE_X_MIN, GameDef.PLAYER_HEAD_ROTATE_X_MAX);
         _cameraTf.localEulerAngles = new Vector3(_cameraXRotate, 0, 0);
     }
 
