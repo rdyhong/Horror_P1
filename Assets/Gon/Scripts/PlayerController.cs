@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
         _col = GetComponent<CapsuleCollider>();
 
         _moveSpeed = GameDef.PLAYER_BASE_SPEED;
-        _sensitiveX = GameDef.MOUSE_SENSITIVE_X;
-        _sensitiveY = GameDef.MOUSE_SENSITIVE_Y;
+        _sensitiveX = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
+        _sensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
     }
 
     void Update()
@@ -34,11 +34,25 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
         PlayerRotate();
         RayCheck();
+
+        // Test
+        if(InputMgr.RMouseDown())
+        {
+            DebugUtil.Log("1");
+        }
+        if(InputMgr.RMouse())
+        {
+            DebugUtil.Log("2");
+        }
+        if(InputMgr.RMouseUp())
+        {
+            DebugUtil.Log("3");
+        }
     }
 
     void PlayerMove()
     {
-        Vector3 nextStep = transform.forward * Input.GetAxis(GameDef.INPUT_AXIS_VERTICAL) + transform.right * Input.GetAxis(GameDef.INPUT_AXIS_HORIZONTAL);
+        Vector3 nextStep = transform.forward * InputMgr.KeyboardAxisY() + transform.right * InputMgr.KeyboardAxisX();
         nextStep = Vector3.ClampMagnitude(nextStep, 1);
         nextStep = transform.position + nextStep * _moveSpeed * Time.deltaTime;
         _rb.MovePosition(nextStep);
@@ -47,12 +61,12 @@ public class PlayerController : MonoBehaviour
     void PlayerRotate()
     {
         // Rotate Y
-        float yRotateSize = Input.GetAxis(GameDef.INPUT_AXIS_MOUSE_X) * _sensitiveY;
+        float yRotateSize = InputMgr.MouseAxisX() * _sensitiveY;
         float yRotate = transform.eulerAngles.y + yRotateSize;
         transform.eulerAngles = new Vector3(0, yRotate, 0);
 
         // Rotate X
-        float xRotateSize = -Input.GetAxis(GameDef.INPUT_AXIS_MOUSE_Y) * _sensitiveX;
+        float xRotateSize = -InputMgr.MouseAxisY() * _sensitiveX;
         _cameraXRotate = Mathf.Clamp(_cameraXRotate + xRotateSize, GameDef.PLAYER_HEAD_ROTATE_X_MIN, GameDef.PLAYER_HEAD_ROTATE_X_MAX);
         _cameraTf.localEulerAngles = new Vector3(_cameraXRotate, 0, 0);
     }
