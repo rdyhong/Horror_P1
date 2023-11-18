@@ -6,6 +6,9 @@ public class UIMgr : Singleton<UIMgr>
 {
     Stack<UIRoot> _stack = new Stack<UIRoot>();
 
+    [SerializeField] Transform _normalTf;
+    [SerializeField] Transform _popUpTf;
+
     public void Push(UIRoot root)
     {
         _stack.Peek()?.gameObject.SetActive(false);
