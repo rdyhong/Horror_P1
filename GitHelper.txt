@@ -1,0 +1,48 @@
+git fetch
+리모트 리포지토리의 정보를 최신으로 업데이트
+
+git checkout -- 파일
+수정된 파일을 최근 커밋으로 초기화
+
+git rebase origin/main
+로컬 프로젝트를 리모트의 작업 내용으로 업데이트
+
+git reset --hard
+나의 작업 내용 초기화
+
+git reset HEAD 파일 (파일 명을 쓰지 않으면 add한 파일 전체를 취소)
+파일을 add 취소
+
+git reset HEAD^
+커밋 취소
+
+git reset HEAD~2 (예시. git reset HEAD~5)
+마지막 2개의 커밋 취소
+
+git checkout -- 파일의 경로
+해당 파일만 초기화
+
+git log
+커밋 내역 확인
+
+git status
+나의 작업 내용 확인
+
+git add 파일경로
+해당 파일을 커밋될 내용에 추가
+
+git commit -m "설명"
+커밋
+
+git push
+커밋한 내용들을 리모트에 올림
+
+
+----- 나의 작업 내용을 리모트에 올리는 방법 -----
+
+git add Assets/*
+git commit -m "설명"
+git fetch
+git rebase origin/main
+git push
+
