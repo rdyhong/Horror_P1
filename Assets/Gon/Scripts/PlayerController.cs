@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
 
-        _moveSpeed = GameDef.PLAYER_BASE_SPEED;
         _sensitiveX = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
         _sensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
     }
@@ -52,6 +51,9 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMove()
     {
+        if(InputMgr.KeyHold(KeyCode.LeftShift)) _moveSpeed = GameDef.PLAYER_RUN_SPEED;
+        else _moveSpeed = GameDef.PLAYER_BASE_SPEED;
+
         Vector3 nextStep = transform.forward * InputMgr.KeyboardAxisY() + transform.right * InputMgr.KeyboardAxisX();
         nextStep = Vector3.ClampMagnitude(nextStep, 1);
         nextStep = transform.position + nextStep * _moveSpeed * Time.deltaTime;

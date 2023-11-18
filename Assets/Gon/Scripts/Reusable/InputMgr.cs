@@ -58,4 +58,8 @@ public static class InputMgr
     {
         return Input.GetKeyDown(keyCode);
     }
+    public static bool KeyHold(KeyCode keyCode)
+    {
+        return Input.GetKey(keyCode);
+    }
 }
