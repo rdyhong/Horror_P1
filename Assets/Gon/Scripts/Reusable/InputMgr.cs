@@ -50,9 +50,12 @@ public static class InputMgr
     {
         return Input.GetAxis(INPUT_AXIS_HORIZONTAL);
     }
-
     public static float KeyboardAxisY()
     {
         return Input.GetAxis(INPUT_AXIS_VERTICAL);
+    }
+    public static bool KeyDown(KeyCode keyCode)
+    {
+        return Input.GetKeyDown(keyCode);
     }
 }

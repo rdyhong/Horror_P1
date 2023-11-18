@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class UIRoot : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool _isCloseBlock = false;
+
+    bool _isLoaded = false;
+
+    public virtual void Push(bool isCloseBlock = false)
     {
-        
+        _isCloseBlock = isCloseBlock;
+        UIMgr.Inst.Push(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void Pop()
     {
-        
+        UIMgr.Inst.Pop();
     }
 }
