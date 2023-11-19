@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class TitleScene : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] Animator _camAnimator;
+
     void Start()
     {
-        
+        _camAnimator.enabled = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
