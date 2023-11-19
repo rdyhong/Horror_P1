@@ -8,6 +8,8 @@ public class TitleScene : MonoBehaviour
 
     void Start()
     {
+        UIMgr.Inst.Push<TitlePanel>();
+
         _camAnimator.enabled = true;
     }
 

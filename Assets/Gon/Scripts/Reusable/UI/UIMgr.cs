@@ -20,7 +20,7 @@ public class UIMgr : Singleton<UIMgr>
     [SerializeField] Transform _coverTf;
     [SerializeField] Transform _poolTf;
 
-    public void Push<T>()
+    public T Push<T>() where T : Object
     {
         string uiName = typeof(T).Name;
         if (!_loadedUI.ContainsKey(uiName))
@@ -29,11 +29,6 @@ public class UIMgr : Singleton<UIMgr>
             UIRoot uiRoot = Instantiate(uiRootGo).GetComponent<UIRoot>();
             
             _loadedUI[uiName] = uiRoot;
-        }
-
-        if (_stack.Count > 0)
-        {
-            _stack.Peek().gameObject.SetActive(false);
         }
 
         _stack.Push(_loadedUI[uiName]);
@@ -51,14 +46,13 @@ public class UIMgr : Singleton<UIMgr>
             case EUIType.Cover:
                 _loadedUI[uiName].transform.SetParent(_coverTf);
                 break;
-            default:
-                DebugUtil.LogErr("UIType Err");
-                break;
         }
 
         RectTransform rt = _loadedUI[uiName].GetComponent<RectTransform>();
         rt.offsetMax = Vector2.zero;
         rt.offsetMin = Vector2.zero;
+        rt.localScale = Vector3.one;
+        return _loadedUI[uiName] as T;
     }
 
     public void Pop()
@@ -77,16 +71,13 @@ public class UIMgr : Singleton<UIMgr>
 
     private void Update()
     {
-        if(_stack.Count > 0)
+        if (InputMgr.KeyDown(KeyCode.Escape))
         {
-            if(InputMgr.KeyDown(KeyCode.Escape))
+            if (_stack.Count > 0 && !_stack.Peek().isCloseBlock)
             {
                 Pop();
             }
-        }
-        else if(_stack.Count == 0)
-        {
-            if (InputMgr.KeyDown(KeyCode.Escape))
+            else if (_stack.Count == 0 || _stack.Peek().isCloseBlock)
             {
                 Push<EscPanel>();
             }
