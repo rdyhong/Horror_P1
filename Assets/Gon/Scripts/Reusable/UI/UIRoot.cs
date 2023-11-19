@@ -12,7 +12,7 @@ public class UIRoot : MonoBehaviour
 
     public virtual void Push()
     {
-
+        
     }
 
     public virtual void Pop()

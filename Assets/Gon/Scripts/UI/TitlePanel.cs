@@ -16,6 +16,6 @@ public class TitlePanel : UIRoot
 
     void OnClickStartButton()
     {
-        LoadSceneMgr.LoadScene(ESceneType.Main);
+        LoadSceneMgr.Inst.LoadScene(ESceneType.Main);
     }
 }

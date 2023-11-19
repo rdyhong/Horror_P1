@@ -52,20 +52,37 @@ public class UIMgr : Singleton<UIMgr>
         rt.offsetMax = Vector2.zero;
         rt.offsetMin = Vector2.zero;
         rt.localScale = Vector3.one;
+        rt.SetAsLastSibling();
+
         return _loadedUI[uiName] as T;
     }
 
-    public void Pop()
+    public void Pop(bool force = false)
     {
         if (_stack.Count > 0)
         {
             UIRoot root = _stack.Peek();
-            if (root.isCloseBlock) return;
+            if (root.isCloseBlock && !force) return;
 
             root = _stack.Pop();
             root.transform.SetParent(_poolTf);
             root.gameObject.SetActive(false);
             root.Pop();
+        }
+    }
+
+    public void ClearAll()
+    {
+        while(true)
+        {
+            if(_stack.Count > 0 )
+            {
+                Pop(true);
+            }
+            else
+            {
+                break;
+            }
         }
     }
 
