@@ -11,6 +11,8 @@ public enum EUIType
 
 public class UIMgr : Singleton<UIMgr>
 {
+    bool _isForceLock = false;
+
     Stack<UIRoot> _stack = new Stack<UIRoot>();
     Dictionary<string ,UIRoot> _loadedUI = new Dictionary<string, UIRoot>();
     const string _uiPath = "UI/";
@@ -22,6 +24,8 @@ public class UIMgr : Singleton<UIMgr>
 
     public T Push<T>() where T : Object
     {
+        if (_isForceLock) return null;
+
         string uiName = typeof(T).Name;
         if (!_loadedUI.ContainsKey(uiName))
         {
@@ -59,6 +63,8 @@ public class UIMgr : Singleton<UIMgr>
 
     public void Pop(bool force = false)
     {
+        if (_isForceLock) return;
+
         if (_stack.Count > 0)
         {
             UIRoot root = _stack.Peek();
@@ -69,6 +75,11 @@ public class UIMgr : Singleton<UIMgr>
             root.gameObject.SetActive(false);
             root.Pop();
         }
+    }
+
+    public void SetForceLock(bool isLock)
+    {
+        _isForceLock = isLock;
     }
 
     public void ClearAll()

@@ -29,6 +29,7 @@ public class LoadSceneMgr : Singleton<LoadSceneMgr>
 
         // 로딩 커버화면 실행
         LoadSceneCover loadSceneCover = UIMgr.Inst.Push<LoadSceneCover>();
+        UIMgr.Inst.SetForceLock(true);
 
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(sceneType.ToString());
         asyncOp.allowSceneActivation = false;
@@ -51,6 +52,7 @@ public class LoadSceneMgr : Singleton<LoadSceneMgr>
 
         yield return new WaitForSecondsRealtime(1f);
 
+        UIMgr.Inst.SetForceLock(false);
         UIMgr.Inst.ClearAll();
 
         _isLoading = false;
