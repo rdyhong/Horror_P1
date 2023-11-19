@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class UIRoot : MonoBehaviour
 {
-    public bool _isCloseBlock = false;
+    public bool isCloseBlock = false;
+    public EUIType uiType;
 
     bool _isLoaded = false;
 
-    public virtual void Push(bool isCloseBlock = false)
+    public virtual void Push()
     {
-        _isCloseBlock = isCloseBlock;
-        UIMgr.Inst.Push(this);
+
     }
 
     public virtual void Pop()
     {
-        UIMgr.Inst.Pop();
+        
     }
 }
