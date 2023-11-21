@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _sensitiveX;
     [SerializeField] float _sensitiveY;
 
-    private float _cameraXRotate = 0;
+    Vector3 _nextMoveStep = Vector3.zero;
+    float _cameraXRotate = 0;
 
     Item _onHandItem = null;
 
@@ -28,10 +29,16 @@ public class PlayerController : MonoBehaviour
         _sensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
     }
 
+    private void FixedUpdate()
+    {
+        _rb.MovePosition(_nextMoveStep); // Move Player
+    }
+
     void Update()
     {
         PlayerMove();
         PlayerRotate();
+        PlayerJump();
         RayCheck();
 
         // Test
@@ -48,16 +55,20 @@ public class PlayerController : MonoBehaviour
             DebugUtil.Log("3");
         }
     }
-
+    
     void PlayerMove()
     {
         if(InputMgr.KeyHold(KeyCode.LeftShift)) _moveSpeed = GameDef.PLAYER_RUN_SPEED;
         else _moveSpeed = GameDef.PLAYER_BASE_SPEED;
 
-        Vector3 nextStep = transform.forward * InputMgr.KeyboardAxisY() + transform.right * InputMgr.KeyboardAxisX();
-        nextStep = Vector3.ClampMagnitude(nextStep, 1);
-        nextStep = transform.position + nextStep * _moveSpeed * Time.deltaTime;
-        _rb.MovePosition(nextStep);
+        float dirX = InputMgr.KeyboardAxisX();
+        float dirZ = InputMgr.KeyboardAxisZ();
+
+        Vector3 nextPos;
+        nextPos = transform.forward * dirZ + transform.right * dirX;
+        nextPos = Vector3.ClampMagnitude(nextPos, 1);
+        nextPos = transform.position + (nextPos * _moveSpeed) * Time.deltaTime;
+        _nextMoveStep = Vector3.Lerp(_nextMoveStep, nextPos, 0.5f);
     }
 
     void PlayerRotate()
@@ -71,6 +82,14 @@ public class PlayerController : MonoBehaviour
         float xRotateSize = -InputMgr.MouseAxisY() * _sensitiveX;
         _cameraXRotate = Mathf.Clamp(_cameraXRotate + xRotateSize, GameDef.PLAYER_HEAD_ROTATE_X_MIN, GameDef.PLAYER_HEAD_ROTATE_X_MAX);
         _cameraTf.localEulerAngles = new Vector3(_cameraXRotate, 0, 0);
+    }
+
+    void PlayerJump()
+    {
+        if(InputMgr.KeyDown(KeyCode.Space))
+        {
+            _rb.AddForce(Vector3.up * 200f, ForceMode.Impulse);
+        }
     }
 
     void RayCheck()

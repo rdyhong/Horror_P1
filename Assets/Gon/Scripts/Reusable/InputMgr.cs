@@ -12,12 +12,12 @@ public static class InputMgr
     // Mouse
     public static float MouseAxisX()
     {
-        return Input.GetAxis(INPUT_AXIS_MOUSE_X);
+        return Input.GetAxisRaw(INPUT_AXIS_MOUSE_X);
     }
 
     public static float MouseAxisY()
     {
-        return Input.GetAxis(INPUT_AXIS_MOUSE_Y);
+        return Input.GetAxisRaw(INPUT_AXIS_MOUSE_Y);
     }
 
     public static bool LMouseDown()
@@ -50,7 +50,7 @@ public static class InputMgr
     {
         return Input.GetAxis(INPUT_AXIS_HORIZONTAL);
     }
-    public static float KeyboardAxisY()
+    public static float KeyboardAxisZ()
     {
         return Input.GetAxis(INPUT_AXIS_VERTICAL);
     }
