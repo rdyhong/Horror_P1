@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.MovePosition(_nextMoveStep); // Move Player
+        _rb.MovePosition(transform.position + (_nextMoveStep * Time.fixedDeltaTime)); // Move Player
     }
 
     void Update()
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         Vector3 nextPos;
         nextPos = transform.forward * dirZ + transform.right * dirX;
         nextPos = Vector3.ClampMagnitude(nextPos, 1);
-        nextPos = transform.position + (nextPos * _moveSpeed) * Time.deltaTime;
+        nextPos = nextPos * _moveSpeed;
         _nextMoveStep = Vector3.Lerp(_nextMoveStep, nextPos, 0.5f);
     }
 
