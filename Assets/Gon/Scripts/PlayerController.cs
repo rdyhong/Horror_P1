@@ -29,33 +29,20 @@ public class PlayerController : MonoBehaviour
         _sensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
 
         InputMgr.SetCursorAvtive(false); // Test Code
+
+        Camera.main.transform.GetComponent<CameraController>().SetCameraTarget(_cameraTf); // Set Cam
     }
 
     private void FixedUpdate()
     {
-        _rb.MovePosition(transform.position + (_nextMoveStep * Time.fixedDeltaTime)); // Move Player
+        PlayerMove();
     }
 
     void Update()
     {
-        PlayerMove();
         PlayerRotate();
         PlayerJump();
         RayCheck();
-
-        // Test
-        if(InputMgr.RMouseDown())
-        {
-            DebugUtil.Log("1");
-        }
-        if(InputMgr.RMouse())
-        {
-            DebugUtil.Log("2");
-        }
-        if(InputMgr.RMouseUp())
-        {
-            DebugUtil.Log("3");
-        }
     }
     
     void PlayerMove()
@@ -71,6 +58,7 @@ public class PlayerController : MonoBehaviour
         nextPos = Vector3.ClampMagnitude(nextPos, 1);
         nextPos = nextPos * _moveSpeed;
         _nextMoveStep = Vector3.Lerp(_nextMoveStep, nextPos, 0.5f);
+        _rb.MovePosition(transform.position + (_nextMoveStep * Time.fixedDeltaTime)); // Move Player
     }
 
     void PlayerRotate()
