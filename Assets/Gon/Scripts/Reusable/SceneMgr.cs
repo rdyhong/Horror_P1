@@ -10,12 +10,18 @@ public enum ESceneType
     Main,
 }
 
-public class LoadSceneMgr : Singleton<LoadSceneMgr>
+public class SceneMgr : Singleton<SceneMgr>
 {
     static bool _isLoading = false;
+    static ESceneType currentScene = ESceneType.Title;
+
+    public static ESceneType GetCurrentScene() => currentScene;
+
     public void LoadScene(ESceneType sceneType)
     {
         if (_isLoading) return;
+
+        currentScene = sceneType;
 
         _isLoading = true;
 
@@ -24,10 +30,10 @@ public class LoadSceneMgr : Singleton<LoadSceneMgr>
 
     IEnumerator LoadAsyncScene(ESceneType sceneType)
     {
-        // UI 정리
+        // UI clear
         UIMgr.Inst.ClearAll();
 
-        // 로딩 커버화면 실행
+        // Show Cover
         LoadSceneCover loadSceneCover = UIMgr.Inst.Push<LoadSceneCover>();
         UIMgr.Inst.SetForceLock(true);
 

@@ -101,6 +101,8 @@ public class UIMgr : Singleton<UIMgr>
     {
         if (InputMgr.KeyDown(KeyCode.Escape))
         {
+            if (SceneMgr.GetCurrentScene() != ESceneType.Main) return;
+
             if (_stack.Count > 0 && !_stack.Peek().isCloseBlock)
             {
                 Pop();

@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
         _sensitiveX = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
         _sensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
+
+        InputMgr.SetCursorAvtive(false); // Test Code
     }
 
     private void FixedUpdate()

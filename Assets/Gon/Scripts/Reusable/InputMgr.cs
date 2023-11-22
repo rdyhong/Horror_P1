@@ -10,6 +10,13 @@ public static class InputMgr
     static readonly int RIGHT_MOUSE_INDEX = 1;
 
     // Mouse
+    public static void SetCursorAvtive(bool active)
+    {
+        Cursor.visible = active;
+        if (active) Cursor.lockState = CursorLockMode.None;
+        else Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public static float MouseAxisX()
     {
         return Input.GetAxisRaw(INPUT_AXIS_MOUSE_X);

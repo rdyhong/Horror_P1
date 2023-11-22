@@ -4,8 +4,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
     private static object s_syncObject = new object();
     private static T s_instance = null;
-    private static bool s_isInit = true;
-    private static Transform s_parentTf = null;
+
     public static T Inst
     {
         get
@@ -33,6 +32,12 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         {
             s_instance = this as T;
         }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         SetParent();
 
         DebugUtil.Log($"Singleton Awake ({this.name})");
@@ -40,16 +45,17 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 
     void SetParent()
     {
-        if(s_isInit)
+        GameObject obj = GameObject.Find(GameDef.SINGLETON_PARENT_NAME);
+        
+        if(obj == null)
         {
-            s_isInit = false;
-            s_parentTf = new GameObject(GameDef.SINGLETON_PARENT_NAME).transform;
-            transform.SetParent(s_parentTf);
-            DontDestroyOnLoad(s_parentTf);
+            Transform parentTf = new GameObject(GameDef.SINGLETON_PARENT_NAME).transform;
+            transform.SetParent(parentTf);
+            DontDestroyOnLoad(parentTf);
         }
         else
         {
-            transform.SetParent(s_parentTf);
+            transform.SetParent(obj.transform);
         }
     }
 }
