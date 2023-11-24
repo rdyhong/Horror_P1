@@ -9,6 +9,8 @@ public static class InputMgr
     static readonly int LEFT_MOUSE_INDEX = 0;
     static readonly int RIGHT_MOUSE_INDEX = 1;
 
+    static bool s_isStopPlayer = false;
+
     // Mouse
     public static void SetCursorAvtive(bool active)
     {
@@ -17,22 +19,31 @@ public static class InputMgr
         else Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public static void StopPlayerMove(bool isStopPlayer)
+    {
+        s_isStopPlayer = isStopPlayer;
+    }
+
     public static float MouseAxisX()
     {
+        if (s_isStopPlayer) return 0;
         return Input.GetAxisRaw(INPUT_AXIS_MOUSE_X);
     }
 
     public static float MouseAxisY()
     {
+        if (s_isStopPlayer) return 0;
         return Input.GetAxisRaw(INPUT_AXIS_MOUSE_Y);
     }
 
     public static bool LMouseDown()
     {
+        if (s_isStopPlayer) return false;
         return Input.GetMouseButtonDown(LEFT_MOUSE_INDEX);
     }
     public static bool LMouse()
     {
+        if (s_isStopPlayer) return false;
         return Input.GetMouseButton(LEFT_MOUSE_INDEX);
     }
     public static bool LMouseUp()
@@ -55,10 +66,12 @@ public static class InputMgr
     //Keyboard
     public static float KeyboardAxisX()
     {
+        if (s_isStopPlayer) return 0;
         return Input.GetAxis(INPUT_AXIS_HORIZONTAL);
     }
     public static float KeyboardAxisZ()
     {
+        if (s_isStopPlayer) return 0;
         return Input.GetAxis(INPUT_AXIS_VERTICAL);
     }
     public static bool KeyDown(KeyCode keyCode)
@@ -67,6 +80,7 @@ public static class InputMgr
     }
     public static bool KeyHold(KeyCode keyCode)
     {
+        if (s_isStopPlayer) return false;
         return Input.GetKey(keyCode);
     }
 }

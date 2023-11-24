@@ -12,7 +12,8 @@ public enum EUIType
 
 public class UIMgr : Singleton<UIMgr>
 {
-    bool _isSceneLoading = false;
+    bool _isPushForceLock = false;
+    bool _isPopForceLock = false;
 
     List<UIRoot> _openedUI = new List<UIRoot>();
     Dictionary<string ,UIRoot> _loadedUI = new Dictionary<string, UIRoot>();
@@ -23,9 +24,9 @@ public class UIMgr : Singleton<UIMgr>
     [SerializeField] Transform _coverTf;
     [SerializeField] Transform _poolTf;
 
-    public T Push<T>() where T : Object
+    public T Push<T>(bool force = false) where T : Object
     {
-        if (_isSceneLoading) return null;
+        if (_isPushForceLock && !force) return null;
 
         string uiName = typeof(T).Name;
         if (!_loadedUI.ContainsKey(uiName))
@@ -62,21 +63,33 @@ public class UIMgr : Singleton<UIMgr>
         return _loadedUI[uiName] as T;
     }
 
-    public void Pop(bool force = false)
+    public void Pop(UIRoot root)
     {
-        if (_isSceneLoading) return;
+        if (!_openedUI.Contains(root)) return;
+
+        _openedUI.Remove(root);
+        root.gameObject.SetActive(false);
+        root.transform.SetParent(_poolTf);
+    }
+
+    public void PopByEsc()
+    {
+        if (_isPopForceLock) return;
 
         if (_openedUI.Count > 0)
         {
             UIRoot root = _openedUI[_openedUI.Count - 1];
-            if (root.isCloseBlock && !force) return;
+            if (root._isEscLock) return;
 
-            root = _openedUI[_openedUI.Count - 1];
-            _openedUI.RemoveAt(_openedUI.Count - 1);
-            root.transform.SetParent(_poolTf);
-            root.gameObject.SetActive(false);
             root.Pop();
         }
+    }
+
+    T GetPanelInOpened<T>() where T : Object
+    {
+        if (!IsPanelOpened<T>()) return null;
+        string name = nameof(T);
+        return _loadedUI[name].GetComponent<T>();
     }
 
     public bool IsPanelOpened<T>()
@@ -96,16 +109,13 @@ public class UIMgr : Singleton<UIMgr>
         else return true;
     }
 
-    bool CheckUAvailablePanel<T>()
+    public void ForceLockPush(bool isLock = true)
     {
-        string name = nameof(T);
-        if (!_loadedUI.ContainsKey(name)) return false;
-        return true;
+        _isPushForceLock = isLock;
     }
-
-    public void SetLock(bool isLock)
+    public void ForceLockPop(bool isLock = true)
     {
-        _isSceneLoading = isLock;
+        _isPopForceLock = isLock;
     }
 
     public void ClearAll()
@@ -114,7 +124,7 @@ public class UIMgr : Singleton<UIMgr>
         {
             if(_openedUI.Count > 0 )
             {
-                Pop(true);
+                Pop(_openedUI[0]);
             }
             else
             {
@@ -129,7 +139,8 @@ public class UIMgr : Singleton<UIMgr>
         if (InputMgr.KeyDown(KeyCode.Escape))
         {
             if (_openedUI.Count == 0) return;
-            if (_openedUI[_openedUI.Count - 1].isCloseBlock)
+
+            if (_openedUI[_openedUI.Count - 1]._isEscLock)
             {
                 if (UIMgr.Inst.IsLastPanel<PlayerBasePanel>() && !UIMgr.Inst.IsPanelOpened<EscPanel>())
                 {
@@ -139,9 +150,7 @@ public class UIMgr : Singleton<UIMgr>
                 return;
             }
 
-            
-
-            Pop();
+            PopByEsc();
         }
     }
     

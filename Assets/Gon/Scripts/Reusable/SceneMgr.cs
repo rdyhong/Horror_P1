@@ -12,9 +12,9 @@ public enum ESceneType
 
 public class SceneMgr : Singleton<SceneMgr>
 {
-    static bool _isLoading = false;
+    public static bool _isLoading = false;
     static ESceneType currentScene = ESceneType.Title;
-
+    LoadSceneCover loadSceneCover;
     public static ESceneType GetCurrentScene() => currentScene;
 
     public void LoadScene(ESceneType sceneType)
@@ -23,23 +23,19 @@ public class SceneMgr : Singleton<SceneMgr>
 
         currentScene = sceneType;
 
+        UIMgr.Inst.ForceLockPop(true); // Lock UI Pop
+        UIMgr.Inst.ForceLockPush(true); // Lock UI Push
+        UIMgr.Inst.ClearAll(); // UI clear
+        loadSceneCover = UIMgr.Inst.Push<LoadSceneCover>(true); // Show Cover
+
         _isLoading = true;
 
-        StartCoroutine(LoadAsyncScene(sceneType));
+        StartCoroutine(LoadAsyncScene());
     }
 
-    IEnumerator LoadAsyncScene(ESceneType sceneType)
+    IEnumerator LoadAsyncScene()
     {
-        // UI clear
-        UIMgr.Inst.ClearAll();
-
-        // Show Cover
-        LoadSceneCover loadSceneCover = UIMgr.Inst.Push<LoadSceneCover>();
-        // Lock UI Push
-        UIMgr.Inst.SetLock(true);
-
-        // Load
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(sceneType.ToString());
+        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(currentScene.ToString());
         asyncOp.allowSceneActivation = false;
 
         while (!asyncOp.isDone)
@@ -48,18 +44,32 @@ public class SceneMgr : Singleton<SceneMgr>
 
             if (asyncOp.progress >= 0.9f)
             {
-                
-                break;
+                if(!asyncOp.allowSceneActivation) asyncOp.allowSceneActivation = true;
             }
             yield return null;
         }
-
-        loadSceneCover.SetLoadingBar(asyncOp.progress);
-        asyncOp.allowSceneActivation = true;
-        UIMgr.Inst.SetLock(false);
-        UIMgr.Inst.ClearAll();
+        
         yield return new WaitForSecondsRealtime(1f);
 
+        UIMgr.Inst.ForceLockPush(false);
+        UIMgr.Inst.ForceLockPop(false);
+        UIMgr.Inst.ClearAll();
+
+        SetScene();
+
         _isLoading = false;
+    }
+
+    void SetScene()
+    {
+        switch(currentScene)
+        {
+            case ESceneType.Title:
+                break;
+
+            case ESceneType.Main:
+                UIMgr.Inst.Push<PlayerBasePanel>(true);
+                break;
+        }
     }
 }

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f1085f4d0124948b472b74280e9d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCloseBlock: 1
+  _isEscLock: 1
   uiType: 0
   sliderLoadingBar: {fileID: 7985788939150785416}
 --- !u!1 &5107685952912285699

@@ -24,12 +24,16 @@ public class EscPanel : UIRoot
     {
         base.Push();
         InputMgr.SetCursorAvtive(true);
+        InputMgr.StopPlayerMove(true);
+        Time.timeScale = 0;
     }
 
     public override void Pop()
     {
         base.Pop();
         InputMgr.SetCursorAvtive(false);
+        InputMgr.StopPlayerMove(false);
+        Time.timeScale = 1;
     }
 
     void OnClickSetting()

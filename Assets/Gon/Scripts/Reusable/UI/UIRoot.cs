@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UIRoot : MonoBehaviour
 {
-    public bool isCloseBlock = false;
+    public bool _isEscLock = false;
     public EUIType uiType;
 
     bool _isLoaded = false;
@@ -17,6 +17,6 @@ public class UIRoot : MonoBehaviour
 
     public virtual void Pop()
     {
-        
+        UIMgr.Inst.Pop(this);
     }
 }
