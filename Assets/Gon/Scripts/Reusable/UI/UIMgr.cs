@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum EUIType
@@ -13,7 +14,7 @@ public class UIMgr : Singleton<UIMgr>
 {
     bool _isSceneLoading = false;
 
-    List<UIRoot> _stack = new List<UIRoot>();
+    List<UIRoot> _openedUI = new List<UIRoot>();
     Dictionary<string ,UIRoot> _loadedUI = new Dictionary<string, UIRoot>();
     const string _uiPath = "UI/";
 
@@ -35,9 +36,9 @@ public class UIMgr : Singleton<UIMgr>
             _loadedUI[uiName] = uiRoot;
         }
 
-        _stack.Add(_loadedUI[uiName]);
+        _openedUI.Add(_loadedUI[uiName]);
         _loadedUI[uiName].Push();
-        _stack[_stack.Count - 1].gameObject.SetActive(true);
+        _openedUI[_openedUI.Count - 1].gameObject.SetActive(true);
 
         switch (_loadedUI[uiName].uiType)
         {
@@ -65,17 +66,41 @@ public class UIMgr : Singleton<UIMgr>
     {
         if (_isSceneLoading) return;
 
-        if (_stack.Count > 0)
+        if (_openedUI.Count > 0)
         {
-            UIRoot root = _stack[_stack.Count - 1];
+            UIRoot root = _openedUI[_openedUI.Count - 1];
             if (root.isCloseBlock && !force) return;
 
-            root = _stack[_stack.Count - 1];
-            _stack.RemoveAt(_stack.Count - 1);
+            root = _openedUI[_openedUI.Count - 1];
+            _openedUI.RemoveAt(_openedUI.Count - 1);
             root.transform.SetParent(_poolTf);
             root.gameObject.SetActive(false);
             root.Pop();
         }
+    }
+
+    public bool IsPanelOpened<T>()
+    {
+        string name = nameof(T);
+        if (!_loadedUI.ContainsKey(name)) return false;
+        if (!_openedUI.Contains(_loadedUI[name])) return false;
+
+        return true;
+    }
+
+    public bool IsLastPanel<T>() where T : Object
+    {
+        if(_openedUI.Count == 0) return false;
+
+        if (_openedUI[_openedUI.Count - 1].GetComponent<T>() == null) return false;
+        else return true;
+    }
+
+    bool CheckUAvailablePanel<T>()
+    {
+        string name = nameof(T);
+        if (!_loadedUI.ContainsKey(name)) return false;
+        return true;
     }
 
     public void SetLock(bool isLock)
@@ -87,7 +112,7 @@ public class UIMgr : Singleton<UIMgr>
     {
         while(true)
         {
-            if(_stack.Count > 0 )
+            if(_openedUI.Count > 0 )
             {
                 Pop(true);
             }
@@ -98,16 +123,26 @@ public class UIMgr : Singleton<UIMgr>
         }
     }
 
+    
     private void Update()
     {
         if (InputMgr.KeyDown(KeyCode.Escape))
         {
-            if (SceneMgr.GetCurrentScene() != ESceneType.Main) return;
-
-            if (_stack.Count > 0 && !_stack[_stack.Count - 1].isCloseBlock)
+            if (_openedUI.Count == 0) return;
+            if (_openedUI[_openedUI.Count - 1].isCloseBlock)
             {
-                Pop();
+                if (UIMgr.Inst.IsLastPanel<PlayerBasePanel>() && !UIMgr.Inst.IsPanelOpened<EscPanel>())
+                {
+                    UIMgr.Inst.Push<EscPanel>();
+                    return;
+                }
+                return;
             }
+
+            
+
+            Pop();
         }
     }
+    
 }
