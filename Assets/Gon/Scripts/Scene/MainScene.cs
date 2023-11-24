@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class MainScene : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        UIMgr.Inst.Push<PlayerBasePanel>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         

@@ -11,9 +11,9 @@ public enum EUIType
 
 public class UIMgr : Singleton<UIMgr>
 {
-    bool _isForceLock = false;
+    bool _isSceneLoading = false;
 
-    Stack<UIRoot> _stack = new Stack<UIRoot>();
+    List<UIRoot> _stack = new List<UIRoot>();
     Dictionary<string ,UIRoot> _loadedUI = new Dictionary<string, UIRoot>();
     const string _uiPath = "UI/";
 
@@ -24,7 +24,7 @@ public class UIMgr : Singleton<UIMgr>
 
     public T Push<T>() where T : Object
     {
-        if (_isForceLock) return null;
+        if (_isSceneLoading) return null;
 
         string uiName = typeof(T).Name;
         if (!_loadedUI.ContainsKey(uiName))
@@ -35,9 +35,9 @@ public class UIMgr : Singleton<UIMgr>
             _loadedUI[uiName] = uiRoot;
         }
 
-        _stack.Push(_loadedUI[uiName]);
+        _stack.Add(_loadedUI[uiName]);
         _loadedUI[uiName].Push();
-        _stack.Peek().gameObject.SetActive(true);
+        _stack[_stack.Count - 1].gameObject.SetActive(true);
 
         switch (_loadedUI[uiName].uiType)
         {
@@ -63,23 +63,24 @@ public class UIMgr : Singleton<UIMgr>
 
     public void Pop(bool force = false)
     {
-        if (_isForceLock) return;
+        if (_isSceneLoading) return;
 
         if (_stack.Count > 0)
         {
-            UIRoot root = _stack.Peek();
+            UIRoot root = _stack[_stack.Count - 1];
             if (root.isCloseBlock && !force) return;
 
-            root = _stack.Pop();
+            root = _stack[_stack.Count - 1];
+            _stack.RemoveAt(_stack.Count - 1);
             root.transform.SetParent(_poolTf);
             root.gameObject.SetActive(false);
             root.Pop();
         }
     }
 
-    public void SetForceLock(bool isLock)
+    public void SetLock(bool isLock)
     {
-        _isForceLock = isLock;
+        _isSceneLoading = isLock;
     }
 
     public void ClearAll()
@@ -103,13 +104,9 @@ public class UIMgr : Singleton<UIMgr>
         {
             if (SceneMgr.GetCurrentScene() != ESceneType.Main) return;
 
-            if (_stack.Count > 0 && !_stack.Peek().isCloseBlock)
+            if (_stack.Count > 0 && !_stack[_stack.Count - 1].isCloseBlock)
             {
                 Pop();
-            }
-            else if (_stack.Count == 0 || _stack.Peek().isCloseBlock)
-            {
-                Push<EscPanel>();
             }
         }
     }

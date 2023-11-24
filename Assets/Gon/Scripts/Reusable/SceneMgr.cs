@@ -35,8 +35,10 @@ public class SceneMgr : Singleton<SceneMgr>
 
         // Show Cover
         LoadSceneCover loadSceneCover = UIMgr.Inst.Push<LoadSceneCover>();
-        UIMgr.Inst.SetForceLock(true);
+        // Lock UI Push
+        UIMgr.Inst.SetLock(true);
 
+        // Load
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(sceneType.ToString());
         asyncOp.allowSceneActivation = false;
 
@@ -46,20 +48,17 @@ public class SceneMgr : Singleton<SceneMgr>
 
             if (asyncOp.progress >= 0.9f)
             {
-                if (!asyncOp.allowSceneActivation)
-                {
-                    asyncOp.allowSceneActivation = true;
-                }
+                
+                break;
             }
             yield return null;
         }
 
         loadSceneCover.SetLoadingBar(asyncOp.progress);
-
-        yield return new WaitForSecondsRealtime(1f);
-
-        UIMgr.Inst.SetForceLock(false);
+        asyncOp.allowSceneActivation = true;
+        UIMgr.Inst.SetLock(false);
         UIMgr.Inst.ClearAll();
+        yield return new WaitForSecondsRealtime(1f);
 
         _isLoading = false;
     }
