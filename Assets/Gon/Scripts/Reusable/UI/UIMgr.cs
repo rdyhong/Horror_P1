@@ -17,7 +17,7 @@ public class UIMgr : Singleton<UIMgr>
 
     List<UIRoot> _openedUI = new List<UIRoot>();
     Dictionary<string ,UIRoot> _loadedUI = new Dictionary<string, UIRoot>();
-    const string _uiPath = "UI/";
+    const string _uiPath = "Prefabs/UI/";
 
     [SerializeField] Transform _normalTf;
     [SerializeField] Transform _popUpTf;
