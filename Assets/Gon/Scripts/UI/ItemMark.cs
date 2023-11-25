@@ -24,16 +24,12 @@ public class ItemMark : PoolObject
 
     IEnumerator BaseCycleCo()
     {
-        //yield return new WaitUntil(() => GameInstance.GetPlayerTransform() != null);
-        bool isUp = true;
-
         while(true)
         {
             yield return null;
             _baseMarkTf.forward = Camera.main.transform.forward;
             _baseMarkTf.transform.position = transform.position + (Camera.main.transform.position - _baseMarkTf.transform.position).normalized * 0.2f + (Camera.main.transform.up * 0.2f);
             
-            //_baseMarkTf.transform.localPosition = _baseMarkTf.transform.localPosition + Vector3.up * 0.2f;
             /*
             Vector3 nextPos;
 
