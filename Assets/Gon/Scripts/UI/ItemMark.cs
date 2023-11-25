@@ -14,6 +14,8 @@ public class ItemMark : PoolObject
     {
         transform.parent = tf;
         transform.localPosition = Vector3.zero;
+        _baseMarkTf.localPosition = Vector3.zero;
+
         _markTopYPos = transform.position.y + 0.01f;
         _markDownYPos = transform.position.y - 0.01f;
 
@@ -22,19 +24,16 @@ public class ItemMark : PoolObject
 
     IEnumerator BaseCycleCo()
     {
-        yield return new WaitUntil(() => GameInstance.GetPlayerTransform() != null);
+        //yield return new WaitUntil(() => GameInstance.GetPlayerTransform() != null);
         bool isUp = true;
 
         while(true)
         {
             yield return null;
-
-            Vector3 nextPos = transform.position + (transform.position - GameInstance.GetPlayerPosition()).normalized;
-            nextPos *= 0.5f;
-
-            _baseMarkTf.position = nextPos;
-            _baseMarkTf.forward = GameInstance.GetPlayerTransform().forward;
-
+            _baseMarkTf.forward = Camera.main.transform.forward;
+            _baseMarkTf.transform.position = transform.position + (Camera.main.transform.position - _baseMarkTf.transform.position).normalized * 0.2f + (Camera.main.transform.up * 0.2f);
+            
+            //_baseMarkTf.transform.localPosition = _baseMarkTf.transform.localPosition + Vector3.up * 0.2f;
             /*
             Vector3 nextPos;
 

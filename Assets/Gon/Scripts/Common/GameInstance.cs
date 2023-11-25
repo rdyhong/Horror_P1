@@ -13,14 +13,22 @@ public class GameInstance : Singleton<GameInstance>
 
     public static Vector3 GetPlayerPosition()
     {
-        if (_playerController == null) return Vector3.zero;
+        if (_playerController == null)
+        {
+            _playerController = FindObjectOfType<PlayerController>();
+        }
 
-        return _playerController.transform.position;
+        if (_playerController == null) return Vector3.zero;
+        else return _playerController.transform.position;
     }
     public static Transform GetPlayerTransform()
     {
-        if (_playerController == null) return null;
+        if (_playerController == null)
+        {
+            _playerController = FindObjectOfType<PlayerController>();
+        }
 
-        return _playerController.transform;
+        if (_playerController == null) return null;
+        else return _playerController.transform;
     }
 }
