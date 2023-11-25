@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemMark : MonoBehaviour
+public class ItemMark : PoolObject
 {
     [SerializeField] Transform _baseMarkTf;
 
@@ -22,16 +22,22 @@ public class ItemMark : MonoBehaviour
 
     IEnumerator BaseCycleCo()
     {
-        yield return new WaitUntil(() => GameInstance.s_PlayerController != null);
-
+        yield return new WaitUntil(() => GameInstance.GetPlayerTransform() != null);
         bool isUp = true;
 
         while(true)
         {
             yield return null;
-            transform.forward = GameInstance.s_PlayerController.transform.forward;
 
+            Vector3 nextPos = transform.position + (transform.position - GameInstance.GetPlayerPosition()).normalized;
+            nextPos *= 0.5f;
+
+            _baseMarkTf.position = nextPos;
+            _baseMarkTf.forward = GameInstance.GetPlayerTransform().forward;
+
+            /*
             Vector3 nextPos;
+
             if (isUp)
             {
                 nextPos = _baseMarkTf.position + new Vector3(0, 0, _markTopYPos);
@@ -44,6 +50,7 @@ public class ItemMark : MonoBehaviour
             }
             
             _baseMarkTf.position = Vector3.Lerp(_baseMarkTf.position, nextPos, 0.1f);
+            */
         }
     }
 }
