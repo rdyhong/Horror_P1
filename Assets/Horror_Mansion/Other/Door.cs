@@ -9,7 +9,6 @@ public class Door : MonoBehaviour
     public float DoorOpenAngle = 90.0f;//угол вращения 
     private Vector3 defaulRot;
     private Vector3 openRot;
-    public Text txt;//text 
     // Start is called before the first frame update
     void Start()
     {
@@ -32,30 +31,11 @@ public class Door : MonoBehaviour
         {
             open = !open;
         }
-        if (trig)
-        {
-            if (open)
-            {
-                txt.text = "Close E";
-            }
-            else
-            {
-                txt.text = "Open E";
-            }
-        }
     }
     private void OnTriggerEnter(Collider coll)//вход и выход в\из  триггера 
     {
         if (coll.tag == "Player")
         {
-            if (!open)
-            {
-                txt.text = "Close E ";
-            }
-            else
-            {
-                txt.text = "Open E";
-            }
             trig = true;
         }
     }
@@ -63,7 +43,6 @@ public class Door : MonoBehaviour
     {
         if (coll.tag == "Player")
         {
-            txt.text = " ";
             trig = false;
         }
     }
