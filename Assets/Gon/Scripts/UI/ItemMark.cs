@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemMark : PoolObject
 {
+    [SerializeField] CanvasGroup _canvasGroup;
     [SerializeField] Transform _baseMarkTf;
 
     float _markMoveSpeed = 0.1f;
@@ -24,28 +25,23 @@ public class ItemMark : PoolObject
 
     IEnumerator BaseCycleCo()
     {
-        while(true)
+        Transform camTf = Camera.main.transform;
+        float maxDistance = 4;
+
+        while (true)
         {
             yield return null;
-            _baseMarkTf.forward = Camera.main.transform.forward;
-            _baseMarkTf.transform.position = transform.position + (Camera.main.transform.position - _baseMarkTf.transform.position).normalized * 0.2f + (Camera.main.transform.up * 0.2f);
-            
-            /*
-            Vector3 nextPos;
-
-            if (isUp)
+            float distance = Vector3.Distance(camTf.position, transform.position);
+            if (distance < maxDistance)
             {
-                nextPos = _baseMarkTf.position + new Vector3(0, 0, _markTopYPos);
-                if (_markTopYPos - nextPos.y < 0.001f) isUp = false;
+                _baseMarkTf.forward = camTf.forward;
+                _baseMarkTf.transform.position = transform.position + (camTf.position - _baseMarkTf.transform.position).normalized * 0.2f + (Camera.main.transform.up * 0.2f);
+                _canvasGroup.alpha = ((maxDistance - distance) * 1.5f) / maxDistance;
             }
             else
             {
-                nextPos = _baseMarkTf.position + new Vector3(0, 0, -_markTopYPos);
-                if (nextPos.y - _markDownYPos < 0.001f) isUp = false;
+                _canvasGroup.alpha = 0;
             }
-            
-            _baseMarkTf.position = Vector3.Lerp(_baseMarkTf.position, nextPos, 0.1f);
-            */
         }
     }
 }
