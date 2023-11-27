@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4258553640529309809}
   - component: {fileID: 912906801285143040}
   - component: {fileID: 5986826718946388101}
+  - component: {fileID: 4560397775822798205}
   m_Layer: 0
   m_Name: Button_Start
   m_TagString: Untagged
@@ -54,7 +55,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2602458969026370575}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -121,6 +122,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &4560397775822798205
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2602458969026370575}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3251974080735708254
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isEscLock: 1
   uiType: 0
+  _canvasGroup: {fileID: 4560397775822798205}
   _startButton: {fileID: 5986826718946388101}
 --- !u!1 &7067562067405820819
 GameObject:
@@ -307,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
