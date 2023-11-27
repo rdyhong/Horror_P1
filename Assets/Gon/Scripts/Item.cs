@@ -13,7 +13,6 @@ public class Data_Item
 public class Item : MonoBehaviour
 {
     [SerializeField] Data_Item _data;
-    [SerializeField] Transform _itemMarkPos;
 
     ItemMark _itemMark;
     Rigidbody _rb;

@@ -970,10 +970,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 3005679845742281477}
   m_HandleRect: {fileID: 4166675348451201748}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1228,6 +1228,8 @@ MonoBehaviour:
   uiType: 0
   _btnSetting: {fileID: 6905545861473624599}
   _btnExit: {fileID: 2496325412488297165}
+  _sliderSensitiveX: {fileID: 7688805854362784026}
+  _sliderSensitiveY: {fileID: 5579236980017981655}
 --- !u!1 &4810998858750881342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,7 +1376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00078729284}
+  m_AnchoredPosition: {x: 0, y: 0.000013291744}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7901983116158449817
@@ -1953,10 +1955,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 6261877091755594279}
   m_HandleRect: {fileID: 1068400238731469575}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

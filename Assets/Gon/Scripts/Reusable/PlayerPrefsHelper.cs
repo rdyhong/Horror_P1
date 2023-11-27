@@ -14,14 +14,17 @@ public static class PlayerPrefsHelper
     public static void SaveIntData(string key, int val)
     {
         PlayerPrefs.SetInt(key, val);
+        UserData.RefrreshData();
     }
     public static void SaveFltData(string key, float val)
     {
         PlayerPrefs.SetFloat(key, val);
+        UserData.RefrreshData();
     }
     public static void SaveStrData(string key, string val)
     {
         PlayerPrefs.SetString(key, val);
+        UserData.RefrreshData();
     }
 
     // Load

@@ -6,7 +6,14 @@ public class GameInstance : Singleton<GameInstance>
 {
     static PlayerController _playerController = null;
 
-    public static void SpawnPlayer()
+    protected override void Awake()
+    {
+        base.Awake();
+
+        UserData.Init();
+    }
+
+    public void SpawnPlayer()
     {
         _playerController = FindObjectOfType<PlayerController>();
     }

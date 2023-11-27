@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform _handItemPosition;
 
     [SerializeField] float _moveSpeed;
-    [SerializeField] float _sensitiveX;
-    [SerializeField] float _sensitiveY;
 
     Vector3 _nextMoveStep = Vector3.zero;
     float _cameraXRotate = 0;
@@ -22,13 +20,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        GameInstance.SpawnPlayer();
+        GameInstance.Inst.SpawnPlayer();
 
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
-
-        _sensitiveX = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
-        _sensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
 
         InputMgr.SetCursorAvtive(false); // Test Code
 
@@ -66,12 +61,12 @@ public class PlayerController : MonoBehaviour
     void PlayerRotate()
     {
         // Rotate Y
-        float yRotateSize = InputMgr.MouseAxisX() * _sensitiveY;
+        float yRotateSize = InputMgr.PlayerMove_MouseAxisX() * UserData.s_MouseSensitiveY;
         float yRotate = transform.eulerAngles.y + yRotateSize;
         transform.eulerAngles = new Vector3(0, yRotate, 0);
 
         // Rotate X
-        float xRotateSize = -InputMgr.MouseAxisY() * _sensitiveX;
+        float xRotateSize = -InputMgr.PlayerMove_MouseAxisY() * UserData.s_MouseSensitiveX;
         _cameraXRotate = Mathf.Clamp(_cameraXRotate + xRotateSize, GameDef.PLAYER_HEAD_ROTATE_X_MIN, GameDef.PLAYER_HEAD_ROTATE_X_MAX);
         _cameraTf.localEulerAngles = new Vector3(_cameraXRotate, 0, 0);
     }
@@ -84,6 +79,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    InteractableObject _usingObj = null;
     void RayCheck()
     {
         RaycastHit hit;
@@ -99,6 +95,31 @@ public class PlayerController : MonoBehaviour
                     _onHandItem.Obtain(_handItemPosition);
                 }
             }
+        }
+
+        if(InputMgr.LMouseDown())
+        {
+            if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
+            {
+                InteractableObject obj = hit.transform.GetComponent<InteractableObject>();
+                if(obj != null)
+                {
+                    InputMgr.StopPlayerMove(true);
+                    _usingObj = obj;
+                    _usingObj.OnEnter();
+                }
+            }
+                
+        }
+        if (InputMgr.LMouse() && _usingObj != null)
+        {
+            _usingObj.OnUse();
+        }
+        if (InputMgr.LMouseUp() && _usingObj != null)
+        {
+            _usingObj.OnExit();
+            _usingObj = null;
+            InputMgr.StopPlayerMove(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Q))

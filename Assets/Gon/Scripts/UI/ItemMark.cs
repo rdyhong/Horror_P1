@@ -35,7 +35,7 @@ public class ItemMark : PoolObject
             if (distance < maxDistance)
             {
                 _baseMarkTf.forward = camTf.forward;
-                _baseMarkTf.transform.position = transform.position + (camTf.position - _baseMarkTf.transform.position).normalized * 0.2f + (Camera.main.transform.up * 0.2f);
+                _baseMarkTf.transform.position = transform.position + (camTf.position - _baseMarkTf.transform.position).normalized * 0.01f + (Camera.main.transform.up * 0.2f);
                 _canvasGroup.alpha = ((maxDistance - distance) * 1.5f) / maxDistance;
             }
             else

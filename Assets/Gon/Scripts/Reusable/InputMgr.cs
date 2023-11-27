@@ -24,30 +24,50 @@ public static class InputMgr
         s_isStopPlayer = isStopPlayer;
     }
 
-    public static float MouseAxisX()
+    // About player movement
+    public static float PlayerMove_MouseAxisX()
     {
         if (s_isStopPlayer) return 0;
         return Input.GetAxisRaw(INPUT_AXIS_MOUSE_X);
     }
-
-    public static float MouseAxisY()
+    public static float PlayerMove_MouseAxisY()
     {
         if (s_isStopPlayer) return 0;
+        return Input.GetAxisRaw(INPUT_AXIS_MOUSE_Y);
+    }
+    public static float KeyboardAxisX()
+    {
+        if (s_isStopPlayer) return 0;
+        return Input.GetAxis(INPUT_AXIS_HORIZONTAL);
+    }
+    public static float KeyboardAxisZ()
+    {
+        if (s_isStopPlayer) return 0;
+        return Input.GetAxis(INPUT_AXIS_VERTICAL);
+    }
+
+    public static float GetMouseAxisX()
+    {
+        return Input.GetAxisRaw(INPUT_AXIS_MOUSE_X);
+    }
+    public static float GetMouseAxisY()
+    {
         return Input.GetAxisRaw(INPUT_AXIS_MOUSE_Y);
     }
 
     public static bool LMouseDown()
     {
-        if (s_isStopPlayer) return false;
+        if (Cursor.visible) return false;
         return Input.GetMouseButtonDown(LEFT_MOUSE_INDEX);
     }
     public static bool LMouse()
     {
-        if (s_isStopPlayer) return false;
+        if (Cursor.visible) return false;
         return Input.GetMouseButton(LEFT_MOUSE_INDEX);
     }
     public static bool LMouseUp()
     {
+        if (Cursor.visible) return false;
         return Input.GetMouseButtonUp(LEFT_MOUSE_INDEX);
     }
     public static bool RMouseDown()
@@ -64,16 +84,7 @@ public static class InputMgr
     }
 
     //Keyboard
-    public static float KeyboardAxisX()
-    {
-        if (s_isStopPlayer) return 0;
-        return Input.GetAxis(INPUT_AXIS_HORIZONTAL);
-    }
-    public static float KeyboardAxisZ()
-    {
-        if (s_isStopPlayer) return 0;
-        return Input.GetAxis(INPUT_AXIS_VERTICAL);
-    }
+    
     public static bool KeyDown(KeyCode keyCode)
     {
         return Input.GetKeyDown(keyCode);
