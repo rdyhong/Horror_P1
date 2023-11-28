@@ -12,6 +12,7 @@ public class Data_Item
 
 public class Item : MonoBehaviour
 {
+    [SerializeField] Transform _markPos;
     [SerializeField] Data_Item _data;
 
     ItemMark _itemMark;
@@ -26,7 +27,7 @@ public class Item : MonoBehaviour
         _col = GetComponent<MeshCollider>();
 
         _itemMark = ResourcesMgr.Inst.Spawn<ItemMark>(EResourcePath.UI);
-        _itemMark.SetMark(transform);
+        _itemMark.SetMark(_markPos == null ? transform : _markPos);
     }
 
     public virtual Data_Item GetData()

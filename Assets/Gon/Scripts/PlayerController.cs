@@ -122,10 +122,12 @@ public class PlayerController : MonoBehaviour
             //InputMgr.StopPlayerMove(false);
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.Q))
         {
             _onHandItem.Dump();
             _onHandItem = null;
         }
+        */
     }
 }

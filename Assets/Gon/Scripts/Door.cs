@@ -21,6 +21,11 @@ public class Door : InteractableObject
     bool _isMoveSlow = true;
     bool _isOverDistance = false;
 
+    private void Awake()
+    {
+        
+    }
+
     private void Update()
     {
         if (_step == -1) return;

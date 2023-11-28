@@ -26,7 +26,8 @@ public class ItemMark : PoolObject
     IEnumerator BaseCycleCo()
     {
         Transform camTf = Camera.main.transform;
-        float maxDistance = 4;
+        float maxDistance = 3;
+        float minDistance = 1.5f;
 
         while (true)
         {
@@ -35,8 +36,15 @@ public class ItemMark : PoolObject
             if (distance < maxDistance)
             {
                 _baseMarkTf.forward = camTf.forward;
-                _baseMarkTf.transform.position = transform.position + (camTf.position - _baseMarkTf.transform.position).normalized * 0.01f + (Camera.main.transform.up * 0.2f);
-                _canvasGroup.alpha = ((maxDistance - distance) * 1.5f) / maxDistance;
+                _baseMarkTf.transform.position = transform.position + (camTf.position - _baseMarkTf.transform.position).normalized * 0.1f + (Camera.main.transform.up * 0.1f);
+                if (distance < minDistance)
+                {
+                    _canvasGroup.alpha = distance / (minDistance * ((minDistance - distance) * 3));
+                }
+                else
+                {
+                    _canvasGroup.alpha = ((maxDistance - distance) * 2f) / maxDistance;
+                }
             }
             else
             {
