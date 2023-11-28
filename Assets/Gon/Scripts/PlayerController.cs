@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        GameInstance.Inst.SpawnPlayer();
+        GameInstance.Inst.SetPlayer(this);
 
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();

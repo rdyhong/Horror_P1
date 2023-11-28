@@ -14,29 +14,24 @@ public class GameInstance : Singleton<GameInstance>
         UserData.Init();
     }
 
-    public void SpawnPlayer()
+    public void SetPlayer(PlayerController pc)
     {
-        _playerController = FindObjectOfType<PlayerController>();
+        _playerController = pc;
+
+        if (!UIMgr.Inst.IsPanelOpened<PlayerBasePanel>())
+        {
+            UIMgr.Inst.Push<PlayerBasePanel>();
+        }
     }
 
     public static Vector3 GetPlayerPosition()
     {
-        if (_playerController == null)
-        {
-            _playerController = FindObjectOfType<PlayerController>();
-        }
-
-        if (_playerController == null) return Vector3.zero;
-        else return _playerController.transform.position;
+        if (PlayerController == null) return Vector3.zero;
+        else return PlayerController.transform.position;
     }
     public static Transform GetPlayerTransform()
     {
-        if (_playerController == null)
-        {
-            _playerController = FindObjectOfType<PlayerController>();
-        }
-
-        if (_playerController == null) return null;
-        else return _playerController.transform;
+        if (PlayerController == null) return null;
+        else return PlayerController.transform;
     }
 }
