@@ -38,12 +38,12 @@ public class Door : InteractableObject
             _curTargetAngle = _shortOpenAngle;
         }
 
-        if (_isMoveSlow) transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, new Vector3(transform.eulerAngles.x, _curTargetAngle, transform.eulerAngles.z), _slowMoveSpeed * Time.deltaTime);
-        else transform.eulerAngles = transform.eulerAngles + new Vector3(transform.eulerAngles.x, _curTargetAngle, transform.eulerAngles.z) * 10 * Time.deltaTime;
+        if (_isMoveSlow) transform.localEulerAngles = Vector3.Slerp(transform.localEulerAngles, new Vector3(transform.localEulerAngles.x, _curTargetAngle, transform.localEulerAngles.z), _slowMoveSpeed * Time.deltaTime);
+        else transform.localEulerAngles = transform.localEulerAngles + new Vector3(transform.localEulerAngles.x, _curTargetAngle, transform.localEulerAngles.z) * 10 * Time.deltaTime;
 
-        if (Mathf.Abs(transform.eulerAngles.y - _curTargetAngle) < 0.01f)
+        if (Mathf.Abs(transform.localEulerAngles.y - _curTargetAngle) < 0.01f)
         {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, _curTargetAngle, transform.eulerAngles.z);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, _curTargetAngle, transform.localEulerAngles.z);
         }
     }
 
