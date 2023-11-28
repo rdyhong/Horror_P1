@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
 
     Item _onHandItem = null;
 
+    public bool IsFindObject => _isFindObject;
+    bool _isFindObject = false;
+
     private void Awake()
     {
         GameInstance.Inst.SpawnPlayer();
@@ -97,19 +100,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(InputMgr.LMouseDown())
+        if (InputMgr.LMouseDown())
         {
             if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
             {
                 InteractableObject obj = hit.transform.GetComponent<InteractableObject>();
-                if(obj != null)
+                if (obj != null)
                 {
                     //InputMgr.StopPlayerMove(true);
                     _usingObj = obj;
                     _usingObj.OnEnter();
                 }
             }
-                
+
         }
         if (InputMgr.LMouse() && _usingObj != null)
         {
@@ -120,6 +123,23 @@ public class PlayerController : MonoBehaviour
             _usingObj.OnExit();
             _usingObj = null;
             //InputMgr.StopPlayerMove(false);
+        }
+
+        
+        if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
+        {
+            if(hit.transform.GetComponent<InteractableObject>() != null || hit.transform.GetComponent<Item>() != null)
+            {
+                _isFindObject = true;
+            }
+            else
+            {
+                _isFindObject = false;
+            }
+        }
+        else
+        {
+            _isFindObject = false;
         }
 
         /*

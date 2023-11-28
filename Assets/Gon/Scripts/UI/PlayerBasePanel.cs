@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class PlayerBasePanel : UIRoot
 {
+    [SerializeField] Image _dotImg;
+
     [SerializeField] CanvasGroup _subTitleAlpha;
     [SerializeField] Text _subTitleT;
 
@@ -13,6 +16,7 @@ public class PlayerBasePanel : UIRoot
 
     private void Awake()
     {
+        _dotImg.color = new Color(1, 1, 1, 0);
         _subTitleQue.Enqueue("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         _subTitleQue.Enqueue("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         _subTitleQue.Enqueue("Nice to meet you");
@@ -23,6 +27,19 @@ public class PlayerBasePanel : UIRoot
 
         StartCoroutine(SubTitleQueControl());
     }
+
+    void Update()
+    {
+        if(GameInstance.PlayerController.IsFindObject)
+        {
+            if(_dotImg.color.a < 1) _dotImg.color = new Color(1, 1, 1, _dotImg.color.a + Time.deltaTime * 3f);
+        }
+        else
+        {
+            if (_dotImg.color.a > 0) _dotImg.color = new Color(1, 1, 1, _dotImg.color.a - Time.deltaTime * 3f);
+        }
+    }
+    
 
     IEnumerator SubTitleQueControl()
     {

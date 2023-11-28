@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameInstance : Singleton<GameInstance>
 {
     static PlayerController _playerController = null;
+    public static PlayerController PlayerController => _playerController;
 
     protected override void Awake()
     {
