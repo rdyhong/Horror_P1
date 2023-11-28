@@ -11,7 +11,8 @@ public class Door : InteractableObject
 
     int _step = -1;
     int _nextStep = -1;
-    int _prevStep = -1; 
+    int _prevStep = -1;
+    int _prevStepCollision = -1;
 
     float _curTargetAngle = 0;
     float _slowMoveSpeed = 2f;
@@ -109,5 +110,30 @@ public class Door : InteractableObject
         _step = _nextStep;
         if (_step == 1) _isOpen = true;
         else if (_step == 0 || _step == 2) _isOpen = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == GameDef.PLAYER_TAG)
+        {
+            _prevStepCollision = _step;
+            _step = -1;
+        }
+        
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.transform.tag == GameDef.PLAYER_TAG)
+        {
+            _step = -1;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.transform.tag == GameDef.PLAYER_TAG)
+        {
+            _step = _prevStepCollision;
+        }
     }
 }

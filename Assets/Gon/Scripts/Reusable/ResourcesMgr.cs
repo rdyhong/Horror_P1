@@ -7,6 +7,7 @@ public enum EResourcePath
 {
     Item,
     UI,
+    Audio,
 
 }
 
@@ -14,6 +15,8 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
 {
     Dictionary<string, Queue<GameObject>> _pooledObject = new Dictionary<string, Queue<GameObject>>();
     Dictionary<string, List<GameObject>> _usingObject = new Dictionary<string, List<GameObject>>();
+
+    readonly string _needRmoveText = "(Clone)";
 
     public T Spawn<T>(EResourcePath type) where T : Object
     {
@@ -42,14 +45,14 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
         _usingObject[name].Add(go);
 
         go.GetComponent<PoolObject>().Spawn();
-
+        go.SetActive(true);
         return go.GetComponent<T>();
     }
 
     public void Recycle(GameObject go)
     {
         string name = go.name;
-        name.Replace("(Clone)", "");
+        name = name.Replace(_needRmoveText, string.Empty);
 
         go.transform.position = new Vector3(0, 1000, 0);
         go.SetActive(false);
@@ -66,6 +69,8 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
                 return "Prefabs/Item/";
             case EResourcePath.UI:
                 return "Prefabs/UI/";
+            case EResourcePath.Audio:
+                return "Prefabs/Audio/";
             default:
                 return string.Empty;
         }

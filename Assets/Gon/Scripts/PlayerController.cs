@@ -10,16 +10,22 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Transform _cameraTf;
     [SerializeField] Transform _handItemPosition;
+    [SerializeField] Transform _soundFootPosition;
 
     [SerializeField] float _moveSpeed;
 
+    public bool IsFindObject => _isFindObject;
+    bool _isFindObject = false;
+
+    Vector3 _prevMoveStep = Vector3.zero;
     Vector3 _nextMoveStep = Vector3.zero;
     float _cameraXRotate = 0;
 
+    float _moveDistance = 0;
+
     Item _onHandItem = null;
 
-    public bool IsFindObject => _isFindObject;
-    bool _isFindObject = false;
+    
 
     private void Awake()
     {
@@ -50,15 +56,26 @@ public class PlayerController : MonoBehaviour
         if(InputMgr.KeyHold(KeyCode.LeftShift)) _moveSpeed = GameDef.PLAYER_RUN_SPEED;
         else _moveSpeed = GameDef.PLAYER_BASE_SPEED;
 
+        _prevMoveStep = transform.position;
+
         float dirX = InputMgr.KeyboardAxisX();
         float dirZ = InputMgr.KeyboardAxisZ();
 
         Vector3 nextPos;
         nextPos = transform.forward * dirZ + transform.right * dirX;
-        nextPos = Vector3.ClampMagnitude(nextPos, 1);
-        nextPos = nextPos * _moveSpeed;
+        nextPos = Vector3.ClampMagnitude(nextPos, 1) * _moveSpeed;
+        //nextPos = nextPos ;
         _nextMoveStep = Vector3.Lerp(_nextMoveStep, nextPos, 0.5f);
         _rb.MovePosition(transform.position + (_nextMoveStep * Time.fixedDeltaTime)); // Move Player
+
+        
+        _moveDistance += Vector3.Distance(_prevMoveStep, _prevMoveStep + (_nextMoveStep * Time.fixedDeltaTime));
+        DebugUtil.Log($"{_moveDistance}");
+        if(_moveDistance > 1)
+        {
+            _moveDistance = 0;
+            SoundMgr.Inst.PlayFootEffect(SoundMgr.ESoundTypeFoot.Wood , _soundFootPosition.position);
+        }
     }
 
     void PlayerRotate()
