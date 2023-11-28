@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CameraController : MonoBehaviour
 {
@@ -15,5 +16,14 @@ public class CameraController : MonoBehaviour
 
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
+
+        _isSet = true;
+    }
+
+    private void Update()
+    {
+        if (!_isSet) return;
+        
+        transform.position = Vector3.Lerp(transform.position, _target.position, 0.5f);
     }
 }

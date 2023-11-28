@@ -29,8 +29,8 @@ public class TitlePanel : UIRoot
         while (true)
         {
             yield return null;
-            _canvasGroup.alpha = _canvasGroup.alpha + 0.1f* Time.deltaTime;
-            if (_canvasGroup.alpha >= 1f) break;
+            _canvasGroup.alpha = _canvasGroup.alpha + 0.2f* Time.deltaTime;
+            if (_canvasGroup.alpha >= 0.95f) break;
         }
 
         _startButton.interactable = true;

@@ -5,51 +5,104 @@ using UnityEngine.UIElements;
 
 public class Door : InteractableObject
 {
-    [SerializeField] BoxCollider _boxCol;
-    float _moveSpeed = 50f;
-    [SerializeField] float _maxOpenAngle = 90.0f;
-    private Vector3 defaulRot;
-    private Vector3 _cutRot;
-    private Vector3 _prevRot;
-    
-    private void Awake()
+    [SerializeField] float _closeAngle = 0f;
+    [SerializeField] float _maxOpenAngle = 90f;
+    [SerializeField] float _shortOpenAngle = 10f;
+
+    int _step = -1;
+    int _nextStep = -1;
+    int _prevStep = -1; 
+
+    float _curTargetAngle = 0;
+    float _slowMoveSpeed = 2f;
+    float _holdTimer = 0;
+
+    bool _isOpen = false;
+    bool _isMoveSlow = true;
+    bool _isOverDistance = false;
+
+    private void Update()
     {
-        
+        if (_step == -1) return;
+
+        if(_step == 0) // Do Close
+        {
+            _curTargetAngle = _closeAngle;
+        }
+        else if(_step == 1) // Do Open
+        {
+            _curTargetAngle = _maxOpenAngle;
+        }
+        else if (_step == 2) // Do Open Short
+        {
+            _curTargetAngle = _shortOpenAngle;
+        }
+
+        if (_isMoveSlow) transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, new Vector3(transform.eulerAngles.x, _curTargetAngle, transform.eulerAngles.z), _slowMoveSpeed * Time.deltaTime);
+        else transform.eulerAngles = transform.eulerAngles + new Vector3(transform.eulerAngles.x, _curTargetAngle, transform.eulerAngles.z) * 10 * Time.deltaTime;
+
+        if (Mathf.Abs(transform.eulerAngles.y - _curTargetAngle) < 0.01f)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, _curTargetAngle, transform.eulerAngles.z);
+        }
     }
 
     public override void OnEnter()
     {
         base.OnEnter();
+
+        if (_isOpen)
+        {
+            _nextStep = 0;
+            _prevStep = 1;
+        }
+        else
+        {
+            _nextStep = 1;
+            _prevStep = 0;
+            _step = 2;
+        }
+
+        _holdTimer = 0;
+        _isMoveSlow = true;
+        _isOverDistance = false;
     }
 
     public override void OnUse()
     {
         base.OnUse();
 
-        RaycastHit hit;
+        if (_isOverDistance) return;
 
-        //float nextYValue = transform.eulerAngles.y + (InputMgr.GetMouseAxisY() * UserData.s_MouseSensitiveY);
-        float addValue = 0;
-        if (InputMgr.GetMouseAxisY() > 0) addValue = _moveSpeed * Time.deltaTime;
-        else if (InputMgr.GetMouseAxisY() < 0) addValue = -_moveSpeed * Time.deltaTime;
-
-        float nextYValue = transform.eulerAngles.y + addValue;
-
-        if (nextYValue > _maxOpenAngle)
+        DebugUtil.Log($"{Vector3.Distance(GameInstance.GetPlayerPosition(), transform.position)}");
+        if (Vector3.Distance(GameInstance.GetPlayerPosition(), transform.position) > 2f)
         {
-            nextYValue = _maxOpenAngle;
-        }
-        else if(nextYValue < 0)
-        {
-            nextYValue = 0;
-        }
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, nextYValue, transform.eulerAngles.z);
+            if (!_isOverDistance)
+            {
+                _isOverDistance = true;
+                _step = _prevStep;
+            }
 
-        //_cutRot = Vector3.Slerp(transform.eulerAngles, new Vector3(transform.eulerAngles.x, nextYValue, transform.eulerAngles.z), 0.5f);
+            return;
+        }
+
+        if (!_isOpen)
+        {
+            _holdTimer += Time.deltaTime;
+
+            if (_holdTimer > 1f) _nextStep = 0;
+            else _nextStep = 1;
+        }
     }
 
     public override void OnExit()
     {
+        if (_isOverDistance) return;
+
         base.OnExit();
+
+        _step = _nextStep;
+        if (_step == 1) _isOpen = true;
+        else if (_step == 0 || _step == 2) _isOpen = false;
     }
 }

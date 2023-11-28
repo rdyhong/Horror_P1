@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
                 InteractableObject obj = hit.transform.GetComponent<InteractableObject>();
                 if(obj != null)
                 {
-                    InputMgr.StopPlayerMove(true);
+                    //InputMgr.StopPlayerMove(true);
                     _usingObj = obj;
                     _usingObj.OnEnter();
                 }
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
         {
             _usingObj.OnExit();
             _usingObj = null;
-            InputMgr.StopPlayerMove(false);
+            //InputMgr.StopPlayerMove(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
