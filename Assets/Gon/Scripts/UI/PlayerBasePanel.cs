@@ -30,11 +30,23 @@ public class PlayerBasePanel : UIRoot
         _subTitleQue.Enqueue("꺅 귀신이당");
         _subTitleQue.Enqueue("꺄아아아악");
         _subTitleQue.Enqueue("으응??? 모지이이이이?");
-        _subTitleQue.Enqueue("아아악 넘 모 무 서 워!!!!!!!!!!");
+        _subTitleQue.Enqueue("귀신이 사라졋당?");
         _subTitleQue.Enqueue("하나도 안 무서웡~~~");
-        _subTitleQue.Enqueue("윽엑익엑 무셥왕!!!!!");
+        _subTitleQue.Enqueue("악 또나왓당!!!");
 
         StartCoroutine(SubTitleQueControl());
+    }
+
+    public override void Push()
+    {
+        base.Push();
+
+        InputMgr.SetCursorAvtive(false);
+    }
+
+    public override void Pop()
+    {
+        base.Pop();
     }
 
     void Update()

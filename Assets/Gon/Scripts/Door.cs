@@ -21,6 +21,7 @@ public class Door : InteractableObject
     bool _isOpen = false;
     bool _isMoveSlow = true;
     bool _isOverDistance = false;
+    bool _isPlayerOnCol = false;
 
     private void Awake()
     {
@@ -30,6 +31,8 @@ public class Door : InteractableObject
     private void Update()
     {
         if (_step == -1) return;
+
+        if (_isPlayerOnCol) return;
 
         if(_step == 0) // Do Close
         {
@@ -80,7 +83,6 @@ public class Door : InteractableObject
 
         if (_isOverDistance) return;
 
-        DebugUtil.Log($"{Vector3.Distance(GameInstance.GetPlayerPosition(), transform.position)}");
         if (Vector3.Distance(GameInstance.GetPlayerPosition(), transform.position) > 2f)
         {
             if (!_isOverDistance)
@@ -116,16 +118,19 @@ public class Door : InteractableObject
     {
         if (collision.transform.tag == GameDef.PLAYER_TAG)
         {
-            _prevStepCollision = _step;
-            _step = -1;
+            //_prevStepCollision = _step;
+            //_step = -1;
+            _isPlayerOnCol = true;
         }
         
     }
     private void OnCollisionStay(Collision collision)
     {
+
         if(collision.transform.tag == GameDef.PLAYER_TAG)
         {
-            _step = -1;
+            //_step = -1;
+            _isPlayerOnCol = true;
         }
     }
 
@@ -133,7 +138,8 @@ public class Door : InteractableObject
     {
         if (collision.transform.tag == GameDef.PLAYER_TAG)
         {
-            _step = _prevStepCollision;
+            _isPlayerOnCol = false;
+            //_step = _prevStepCollision == 2 ? 0 : _prevStepCollision;
         }
     }
 }

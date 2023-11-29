@@ -24,6 +24,6 @@ public class CameraController : MonoBehaviour
     {
         if (!_isSet) return;
         
-        transform.position = Vector3.Lerp(transform.position, _target.position, 0.5f);
+        //transform.position = Vector3.Lerp(transform.position, _target.position, 0.5f);
     }
 }
