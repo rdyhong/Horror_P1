@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _cameraBaseHeight = _cameraPosTf.position.y;
+        _cameraBaseHeight = _cameraPosTf.localPosition.y;
         GameInstance.Inst.SetPlayer(this);
 
         Camera.main.transform.GetComponent<CameraController>().SetCameraTarget(_cameraPosTf); // Set Cam
@@ -99,16 +99,16 @@ public class PlayerController : MonoBehaviour
             _colStand.enabled = false;
             _colCrouch.enabled = true;
 
-            _cameraPosTf.position = Vector3.Lerp(_cameraPosTf.position,
-                new Vector3(_cameraPosTf.position.x, _cameraBaseHeight - 0.8f, _cameraPosTf.position.z), 3 * Time.deltaTime);
+            _cameraPosTf.localPosition = Vector3.Lerp(_cameraPosTf.localPosition,
+                new Vector3(_cameraPosTf.localPosition.x, _cameraBaseHeight - 0.8f, _cameraPosTf.localPosition.z), 3 * Time.deltaTime);
         }
         else
         {
             _colStand.enabled = true;
             _colCrouch.enabled = false;
 
-            _cameraPosTf.position = Vector3.Lerp(_cameraPosTf.position,
-                new Vector3(_cameraPosTf.position.x, _cameraBaseHeight, _cameraPosTf.position.z), 3 * Time.deltaTime);
+            _cameraPosTf.localPosition = Vector3.Lerp(_cameraPosTf.localPosition,
+                new Vector3(_cameraPosTf.localPosition.x, _cameraBaseHeight, _cameraPosTf.localPosition.z), 3 * Time.deltaTime);
         }
     }
 

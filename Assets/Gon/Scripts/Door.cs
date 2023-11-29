@@ -9,6 +9,8 @@ public class Door : InteractableObject
     [SerializeField] float _maxOpenAngle = 90f;
     [SerializeField] float _shortOpenAngle = 10f;
 
+    
+    BoxCollider _boxCol;
     int _step = -1;
     int _nextStep = -1;
     int _prevStep = -1;
@@ -25,7 +27,7 @@ public class Door : InteractableObject
 
     private void Awake()
     {
-        
+        _boxCol = GetComponent<BoxCollider>();
     }
 
     private void Update()
