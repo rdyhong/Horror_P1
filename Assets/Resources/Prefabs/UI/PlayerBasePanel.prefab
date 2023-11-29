@@ -225,6 +225,8 @@ MonoBehaviour:
   _dotImg: {fileID: 2482032079853219298}
   _subTitleAlpha: {fileID: 2019748592231404327}
   _subTitleT: {fileID: 2725560434311543641}
+  _questAlertRt: {fileID: 2382206227706983269}
+  _questAlertT: {fileID: 1208142382227102098}
 --- !u!1 &5184848942429918415
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,13 +299,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 50
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: mmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  m_Text: Next Goal
 --- !u!1 &5893415381716218721
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,16 +7,25 @@ using UnityEngine.UI;
 
 public class PlayerBasePanel : UIRoot
 {
+    // Item Dot
     [SerializeField] Image _dotImg;
 
+    // SubTitle
     [SerializeField] CanvasGroup _subTitleAlpha;
     [SerializeField] Text _subTitleT;
+
+    [SerializeField] RectTransform _questAlertRt;
+    [SerializeField] Text _questAlertT;
+    float _questAlertBaseX;
 
     Queue<string> _subTitleQue = new Queue<string>();
 
     private void Awake()
     {
+        _questAlertBaseX = _questAlertRt.anchoredPosition.x;
+
         _dotImg.color = new Color(1, 1, 1, 0);
+
         _subTitleQue.Enqueue("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         _subTitleQue.Enqueue("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         _subTitleQue.Enqueue("Nice to meet you");
@@ -37,6 +46,15 @@ public class PlayerBasePanel : UIRoot
         else
         {
             if (_dotImg.color.a > 0) _dotImg.color = new Color(1, 1, 1, _dotImg.color.a - Time.deltaTime * 3f);
+        }
+
+        if(InputMgr.KeyHold(KeyCode.CapsLock))
+        {
+            _questAlertRt.anchoredPosition = Vector2.Lerp(_questAlertRt.anchoredPosition, new Vector2(0, _questAlertRt.anchoredPosition.y), 4f * Time.deltaTime);
+        }
+        else
+        {
+            _questAlertRt.anchoredPosition = Vector2.Lerp(_questAlertRt.anchoredPosition, new Vector2(_questAlertBaseX, _questAlertRt.anchoredPosition.y), 4f * Time.deltaTime);
         }
     }
     
