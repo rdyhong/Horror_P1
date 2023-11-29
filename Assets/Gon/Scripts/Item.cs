@@ -41,7 +41,7 @@ public class Item : MonoBehaviour
         if (_isPlayerOwned) return null;
         _isPlayerOwned = true;
 
-        _rb.isKinematic = true;
+        //_rb.isKinematic = true;
         _col.enabled = false;
 
         transform.SetParent(parent);

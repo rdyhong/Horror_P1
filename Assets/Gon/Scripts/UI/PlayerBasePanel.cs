@@ -26,13 +26,13 @@ public class PlayerBasePanel : UIRoot
 
         _dotImg.color = new Color(1, 1, 1, 0);
 
-        _subTitleQue.Enqueue("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-        _subTitleQue.Enqueue("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-        _subTitleQue.Enqueue("Nice to meet you");
-        _subTitleQue.Enqueue("And you?");
-        _subTitleQue.Enqueue("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-        _subTitleQue.Enqueue("wqqqwwqwqwqwqwqwqwqwqwqw");
-        _subTitleQue.Enqueue("gggggggasdfasfawfawfawfawefgggggggggggggwaefawfeawfawfawgggggggggfwafawfawegggggggggg");
+        _subTitleQue.Enqueue("너무 무섭당");
+        _subTitleQue.Enqueue("꺅 귀신이당");
+        _subTitleQue.Enqueue("꺄아아아악");
+        _subTitleQue.Enqueue("으응??? 모지이이이이?");
+        _subTitleQue.Enqueue("아아악 넘 모 무 서 워!!!!!!!!!!");
+        _subTitleQue.Enqueue("하나도 안 무서웡~~~");
+        _subTitleQue.Enqueue("윽엑익엑 무셥왕!!!!!");
 
         StartCoroutine(SubTitleQueControl());
     }

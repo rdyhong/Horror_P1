@@ -145,6 +145,7 @@ public class PlayerController : MonoBehaviour
         
         if (Physics.Raycast(_cameraTf.position, _cameraTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
         {
+            DebugUtil.Log($"{hit.transform.name}");
             if(hit.transform.GetComponent<InteractableObject>() != null || hit.transform.GetComponent<Item>() != null)
             {
                 _isFindObject = true;
