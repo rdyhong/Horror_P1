@@ -6,13 +6,13 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     NavMeshAgent _agent;
-    public float updateInterval = 3f; // 목표 위치를 갱신할 시간 간격 (초)
+    float updateInterval = 10f; // 목표 위치를 갱신할 시간 간격 (초)
     private float timeSinceLastUpdate; // 마지막으로 목표 위치를 갱신했던 시간
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = 0.5f;
+        _agent.speed = 1f;
         timeSinceLastUpdate = updateInterval; // 초기에 목표 위치를 설정하기 위해 시간 값을 설정합니다.
     }
     void Start()
