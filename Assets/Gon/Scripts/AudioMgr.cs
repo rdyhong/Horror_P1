@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundMgr : Singleton<SoundMgr>
+public enum ESoundTypeFoot
 {
-    public enum ESoundTypeFoot
-    {
-        Grass,
-        Wood,
-        Rock,
+    Grass,
+    Wood,
+    Rock,
+}
 
-    }
+public class AudioMgr : Singleton<AudioMgr>
+{
+    
 
     [SerializeField] AudioClip[] _footGrass;
     [SerializeField] AudioClip[] _footRock;
@@ -18,7 +19,6 @@ public class SoundMgr : Singleton<SoundMgr>
 
     public void PlayFootEffect(ESoundTypeFoot type, Vector3 pos)
     {
-        type = ESoundTypeFoot.Wood;
         AudioEffect eff = ResourcesMgr.Inst.Spawn<AudioEffect>(EResourcePath.Audio);
         eff.transform.position = pos;
 
@@ -28,8 +28,10 @@ public class SoundMgr : Singleton<SoundMgr>
                 eff.PlayEffect(_footWood[0]);
                 break;
             case ESoundTypeFoot.Grass:
+                eff.PlayEffect(_footGrass[0]);
                 break;
             case ESoundTypeFoot.Rock:
+                eff.PlayEffect(_footRock[0]);
                 break;
         }
     }

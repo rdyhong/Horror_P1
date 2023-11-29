@@ -70,11 +70,12 @@ public class PlayerController : MonoBehaviour
 
         
         _moveDistance += Vector3.Distance(_prevMoveStep, _prevMoveStep + (_nextMoveStep * Time.fixedDeltaTime));
-        DebugUtil.Log($"{_moveDistance}");
-        if(_moveDistance > 1)
+        Debug.DrawRay(transform.position + (Vector3.up * 0.8f), -transform.up, Color.blue);
+        if (_moveDistance > 1)
         {
             _moveDistance = 0;
-            SoundMgr.Inst.PlayFootEffect(SoundMgr.ESoundTypeFoot.Wood , _soundFootPosition.position);
+            PlayFootAudio();
+            //SoundMgr.Inst.PlayFootEffect(ESoundTypeFoot.Wood , _soundFootPosition.position);
         }
     }
 
@@ -96,6 +97,27 @@ public class PlayerController : MonoBehaviour
         if(InputMgr.KeyDown(KeyCode.Space))
         {
             _rb.AddForce(Vector3.up * 200f, ForceMode.Impulse);
+        }
+    }
+
+    void PlayFootAudio()
+    {
+        RaycastHit hit;
+        Vector3 rayStartPos = transform.position + (Vector3.up * 0.8f);
+
+        LayerMask layer;
+
+        if (Physics.Raycast(rayStartPos, -transform.up, out hit, 1, 1 << LayerMask.NameToLayer("GroundWood")))
+        {
+            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Wood, _soundFootPosition.position);
+        }
+        else if (Physics.Raycast(rayStartPos, -transform.up, out hit, 1, 1 << LayerMask.NameToLayer("GroundRock")))
+        {
+            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Rock, _soundFootPosition.position);
+        }
+        else if (Physics.Raycast(rayStartPos, -transform.up, out hit, 1, 1 << LayerMask.NameToLayer("GroundGrass")))
+        {
+            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Grass, _soundFootPosition.position);
         }
     }
 
