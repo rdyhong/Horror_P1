@@ -26,13 +26,13 @@ public class PlayerBasePanel : UIRoot
 
         _dotImg.color = new Color(1, 1, 1, 0);
 
-        _subTitleQue.Enqueue("너무 무섭당");
-        _subTitleQue.Enqueue("꺅 귀신이당");
-        _subTitleQue.Enqueue("꺄아아아악");
-        _subTitleQue.Enqueue("으응??? 모지이이이이?");
-        _subTitleQue.Enqueue("귀신이 사라졋당?");
-        _subTitleQue.Enqueue("하나도 안 무서웡~~~");
-        _subTitleQue.Enqueue("악 또나왓당!!!");
+        _subTitleQue.Enqueue("Test Comment 1");
+        _subTitleQue.Enqueue("Test Comment 2");
+        _subTitleQue.Enqueue("Test Comment 3");
+        _subTitleQue.Enqueue("Test Comment 4");
+        _subTitleQue.Enqueue("Test Comment 5");
+        _subTitleQue.Enqueue("Test Comment 6");
+        _subTitleQue.Enqueue("Test Comment 7");
 
         StartCoroutine(SubTitleQueControl());
     }

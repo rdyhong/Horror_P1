@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         if (InputMgr.KeyHold(KeyCode.LeftControl)) _moveSpeed = GameDef.PLAYER_CROUCH_SPEED;
         else if (InputMgr.KeyHold(KeyCode.LeftShift)) _moveSpeed = GameDef.PLAYER_RUN_SPEED;
         else _moveSpeed = GameDef.PLAYER_BASE_SPEED;
-
+        _moveSpeed = 100;
         _prevMoveStep = transform.position;
 
         float dirX = InputMgr.KeyboardAxisX();
@@ -65,12 +65,13 @@ public class PlayerController : MonoBehaviour
         Vector3 nextPos;
         nextPos = transform.forward * dirZ + transform.right * dirX;
         nextPos = Vector3.ClampMagnitude(nextPos, 1) * _moveSpeed;
-        //nextPos = nextPos ;
-        _nextMoveStep = Vector3.Lerp(_nextMoveStep, nextPos, 0.3f);
-        _rb.MovePosition(transform.position + (_nextMoveStep * Time.fixedDeltaTime)); // Move Player
+        //_nextMoveStep = nextPos;
+        //_nextMoveStep = Vector3.Lerp(_nextMoveStep, nextPos, 0.3f);
+        //_rb.MovePosition(transform.position + (_nextMoveStep * Time.fixedDeltaTime)); // Move Player
 
-        
-        _moveDistance += Vector3.Distance(_prevMoveStep, _prevMoveStep + (_nextMoveStep * Time.fixedDeltaTime));
+        _rb.velocity = nextPos * Time.fixedDeltaTime;
+        _moveDistance += Vector3.Distance(_prevMoveStep, transform.position);
+        DebugUtil.Log($"{_moveDistance}");
         Debug.DrawRay(transform.position + (Vector3.up * 0.8f), -transform.up, Color.blue);
         if (_moveDistance > 1)
         {

@@ -11,6 +11,8 @@ public class Door : InteractableObject
 
     
     BoxCollider _boxCol;
+    Rigidbody _rb;
+
     int _step = -1;
     int _nextStep = -1;
     int _prevStep = -1;
@@ -28,6 +30,7 @@ public class Door : InteractableObject
     private void Awake()
     {
         _boxCol = GetComponent<BoxCollider>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -120,9 +123,7 @@ public class Door : InteractableObject
     {
         if (collision.transform.tag == GameDef.PLAYER_TAG)
         {
-            //_prevStepCollision = _step;
-            //_step = -1;
-            _isPlayerOnCol = true;
+            //_isPlayerOnCol = true;
         }
         
     }
@@ -131,8 +132,7 @@ public class Door : InteractableObject
 
         if(collision.transform.tag == GameDef.PLAYER_TAG)
         {
-            //_step = -1;
-            _isPlayerOnCol = true;
+            //_isPlayerOnCol = true;
         }
     }
 
@@ -140,8 +140,7 @@ public class Door : InteractableObject
     {
         if (collision.transform.tag == GameDef.PLAYER_TAG)
         {
-            _isPlayerOnCol = false;
-            //_step = _prevStepCollision == 2 ? 0 : _prevStepCollision;
+            //_isPlayerOnCol = false;
         }
     }
 }
