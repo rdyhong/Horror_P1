@@ -4,9 +4,9 @@ public static class GameDef
     public static readonly float PLAYER_HEAD_ROTATE_X_MIN = -80;
     public static readonly float PLAYER_HEAD_ROTATE_X_MAX = 80;
 
-    public static readonly float PLAYER_BASE_SPEED = 1.3f;
-    public static readonly float PLAYER_RUN_SPEED = 1.8f;
-    public static readonly float PLAYER_CROUCH_SPEED = 0.7f;
+    public static readonly float PLAYER_BASE_SPEED = 80;
+    public static readonly float PLAYER_RUN_SPEED = 100;
+    public static readonly float PLAYER_CROUCH_SPEED = 50f;
 
     // String Def
     public static readonly string SINGLETON_PARENT_NAME = "Singleton";

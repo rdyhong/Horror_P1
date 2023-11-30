@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform _soundFootPosition;
 
     [SerializeField] float _moveSpeed;
+
+    RaycastHit _playerHeighthit;
 
     public bool IsFindObject => _isFindObject;
     bool _isFindObject = false;
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
         GameInstance.Inst.SetPlayer(this);
 
         Camera.main.transform.GetComponent<CameraController>().SetCameraTarget(_cameraPosTf); // Set Cam
+        _rb.isKinematic = false;
     }
 
     private void FixedUpdate()
@@ -50,29 +54,29 @@ public class PlayerController : MonoBehaviour
         RayCheck();
         PlayerCrouch();
     }
-    
+
     void PlayerMove()
     {
         if (InputMgr.KeyHold(KeyCode.LeftControl)) _moveSpeed = GameDef.PLAYER_CROUCH_SPEED;
         else if (InputMgr.KeyHold(KeyCode.LeftShift)) _moveSpeed = GameDef.PLAYER_RUN_SPEED;
         else _moveSpeed = GameDef.PLAYER_BASE_SPEED;
-        _moveSpeed = 100;
-        _prevMoveStep = transform.position;
-
-        float dirX = InputMgr.KeyboardAxisX();
-        float dirZ = InputMgr.KeyboardAxisZ();
 
         Vector3 nextPos;
-        nextPos = transform.forward * dirZ + transform.right * dirX;
+        nextPos = transform.forward * InputMgr.KeyboardAxisZ() + transform.right * InputMgr.KeyboardAxisX();
         nextPos = Vector3.ClampMagnitude(nextPos, 1) * _moveSpeed;
-        //_nextMoveStep = nextPos;
-        //_nextMoveStep = Vector3.Lerp(_nextMoveStep, nextPos, 0.3f);
-        //_rb.MovePosition(transform.position + (_nextMoveStep * Time.fixedDeltaTime)); // Move Player
 
         _rb.velocity = nextPos * Time.fixedDeltaTime;
         _moveDistance += Vector3.Distance(_prevMoveStep, transform.position);
-        DebugUtil.Log($"{_moveDistance}");
-        Debug.DrawRay(transform.position + (Vector3.up * 0.8f), -transform.up, Color.blue);
+        _prevMoveStep = transform.position;
+
+        // Set height
+        Debug.DrawRay(_cameraPosTf.position + Vector3.up, -transform.up * 20, Color.red);
+        if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out _playerHeighthit, 20))
+        {
+            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, _playerHeighthit.point.y + 0.1f, 0.4f), transform.position.z);
+        }
+
+        // Foot audio
         if (_moveDistance > 1)
         {
             _moveDistance = 0;
