@@ -68,6 +68,14 @@ public class PlayerBasePanel : UIRoot
         {
             _questAlertRt.anchoredPosition = Vector2.Lerp(_questAlertRt.anchoredPosition, new Vector2(_questAlertBaseX, _questAlertRt.anchoredPosition.y), 4f * Time.deltaTime);
         }
+
+        if (InputMgr.KeyDown(KeyCode.Tab))
+        {
+            if (!UIMgr.Inst.IsPanelOpened<InventoryPanel>())
+            {
+                UIMgr.Inst.Push<InventoryPanel>();
+            }
+        }
     }
     
 

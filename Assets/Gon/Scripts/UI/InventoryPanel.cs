@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryPanel : MonoBehaviour
+public class InventoryPanel : UIRoot
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Push()
     {
-        
+        base.Push();
+
+        InputMgr.SetCursorAvtive(true);
+        InputMgr.StopPlayerMove(true);
+        Time.timeScale = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Pop()
     {
-        
+        base.Pop();
+
+        InputMgr.SetCursorAvtive(false);
+        InputMgr.StopPlayerMove(false);
+        Time.timeScale = 1;
     }
 }
