@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public static class UserData
 {
     static bool _isLoaded = false;
+
+    public static UserData_Setting Setting = new UserData_Setting();
 
     public static float s_MouseSensitiveX => _mouseSensitiveX;
     static float _mouseSensitiveX = 0;
@@ -26,5 +29,27 @@ public static class UserData
         _mouseSensitiveX = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
         _mouseSensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
         _screenFov = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_SCREEN_FOV);
+    }
+}
+
+[Serializable]
+public class UserData_Setting
+{
+    public string Language;
+    public float MouseSensitiveX;
+    public float MouseSensitiveY;
+    public float ScreenFov;
+
+    public UserData_Setting()
+    {
+
+    }
+    public void Save()
+    {
+
+    }
+    public void Load()
+    {
+
     }
 }
