@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class JsonMgr : MonoBehaviour
+public class JsonMgr : Singleton<JsonMgr>
 {
+    List<Data_Item> data_Items = new List<Data_Item>();
+    
     public void Init()
     {
-
+        
     }
 
     T LoadData<T>()
@@ -33,4 +35,14 @@ public class JsonMgr : MonoBehaviour
         // 颇老 积己 棺 历厘
         File.WriteAllText(path, jsonData);
     }
+}
+
+[Serializable]
+public class Data_Item
+{
+    string Name_KR = string.Empty;
+    string Name_EN = string.Empty;
+    bool Consumable;
+    int[] ConbinableKey;
+    bool Holdable;
 }

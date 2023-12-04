@@ -3,13 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class Data_Item
-{
-    public string name = string.Empty;
-    public string iconPath = string.Empty;
-}
-
 public class Item : MonoBehaviour
 {
     [SerializeField] Transform _markPos;

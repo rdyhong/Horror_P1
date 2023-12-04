@@ -72,6 +72,7 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
             case EResourcePath.Audio:
                 return "Prefabs/Audio/";
             default:
+                DebugUtil.LogErr("Resource path is not exist");
                 return string.Empty;
         }
     }
