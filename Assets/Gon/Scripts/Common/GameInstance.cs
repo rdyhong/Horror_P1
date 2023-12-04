@@ -14,6 +14,7 @@ public class GameInstance : Singleton<GameInstance>
     {
         base.Awake();
 
+        JsonMgr.Inst.Init();
         UserData.Init();
     }
 

@@ -6,23 +6,26 @@ using UnityEngine;
 
 public class JsonMgr : Singleton<JsonMgr>
 {
-    List<Data_Item> data_Items = new List<Data_Item>();
+    public Dictionary<int, Data_Item> data_Items = new Dictionary<int, Data_Item>();
     
     public void Init()
     {
-        
+        data_Items = LoadData<Data_Item>();
     }
 
-    T LoadData<T>()
+    Dictionary<int, T> LoadData<T>()
     {
         string name = typeof(T).Name;
         // 데이터를 불러올 경로 지정
-        string path = Path.Combine(Application.dataPath, $"{name}.json");
+        //string path = Path.Combine(Application.dataPath, $"{name}.json");
         // 파일의 텍스트를 string으로 저장
-        string jsonData = File.ReadAllText(path);
+        TextAsset textData = Resources.Load($"JsonData/{name}") as TextAsset;
+
+
+        //string jsonData = File.ReadAllText(path);
         // 이 Json데이터를 역직렬화하여 playerData에 넣어줌
 
-        return JsonUtility.FromJson<T>(jsonData);
+        return JsonUtility.FromJson<Dictionary<int, T>>(textData.ToString());
     }
 
     void SaveData<T>(object data)
