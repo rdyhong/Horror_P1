@@ -23,11 +23,11 @@ public class JsonMgr : MonoBehaviour
         return JsonUtility.FromJson<T>(jsonData);
     }
 
-    void SaveData<T>()
+    void SaveData<T>(object data)
     {
         string name = typeof(T).Name;
         // ToJson을 사용하면 JSON형태로 포멧팅된 문자열이 생성된다  
-        string jsonData = JsonUtility.ToJson(UserData.Setting);
+        string jsonData = JsonUtility.ToJson(data);
         // 데이터를 저장할 경로 지정
         string path = Path.Combine(Application.dataPath, $"{name}.json");
         // 파일 생성 및 저장
