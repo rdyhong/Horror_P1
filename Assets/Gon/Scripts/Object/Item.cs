@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] Transform _markPos;
+    [SerializeField] int Index = -1;
     [SerializeField] Data_Item _data;
+    [SerializeField] Transform _markPos;
 
     ItemMark _itemMark;
     Rigidbody _rb;
