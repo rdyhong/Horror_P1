@@ -162,13 +162,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553517437ac837c40b3b279e808061b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _markPos: {fileID: 2886458468204749485}
+  Index: 0
   _data:
     Name_KR: "\uCD1B\uBD88"
     Name_EN: Candle
     Consumable: 0
     ConbinableKey: 
     Holdable: 0
+  _markPos: {fileID: 2886458468204749485}
 --- !u!65 &3517441549926209522
 BoxCollider:
   m_ObjectHideFlags: 0
