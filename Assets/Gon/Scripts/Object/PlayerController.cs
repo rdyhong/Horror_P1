@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody _rb;
-
     [SerializeField] CapsuleCollider _colStand;
     [SerializeField] CapsuleCollider _colCrouch;
 
@@ -23,15 +22,12 @@ public class PlayerController : MonoBehaviour
     bool _isFindObject = false;
 
     Vector3 _prevMoveStep = Vector3.zero;
-    Vector3 _nextMoveStep = Vector3.zero;
     float _cameraXRotate = 0;
     float _cameraBaseHeight;
 
     float _moveDistance = 0;
 
     Item _onHandItem = null;
-
-    
 
     private void Awake()
     {
@@ -50,7 +46,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerRotate();
-        PlayerJump();
         RayCheck();
         PlayerCrouch();
     }
@@ -117,20 +112,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void PlayerJump()
-    {
-        if(InputMgr.KeyDown(KeyCode.Space))
-        {
-            _rb.AddForce(Vector3.up * 200f, ForceMode.Impulse);
-        }
-    }
-
     void PlayFootAudio()
     {
         RaycastHit hit;
         Vector3 rayStartPos = transform.position + (Vector3.up * 0.8f);
         float rayRange = 1.3f;
-        LayerMask layer;
 
         if (Physics.Raycast(rayStartPos, -transform.up, out hit, rayRange, 1 << LayerMask.NameToLayer("GroundWood")))
         {

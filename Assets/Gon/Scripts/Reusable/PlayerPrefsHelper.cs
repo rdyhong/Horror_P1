@@ -84,5 +84,11 @@ public static class PlayerPrefsHelper
     public static void ResetData()
     {
         PlayerPrefs.DeleteAll();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

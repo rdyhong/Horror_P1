@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EscPanel : UIRoot
 {
+    [SerializeField] Button _btn_Debug;
     [SerializeField] Button _btnSetting;
 
     [SerializeField] Button _btnExit;
@@ -19,6 +20,13 @@ public class EscPanel : UIRoot
 
     void Init()
     {
+        // Debug
+        _btn_Debug.gameObject.SetActive(true);
+        _btn_Debug.onClick.AddListener(() => {
+            
+        });
+        //
+
         _btnSetting.onClick.AddListener(() => { OnClickSetting(); });
         _btnExit.onClick.AddListener(() => { OnClickExit(); });
 
