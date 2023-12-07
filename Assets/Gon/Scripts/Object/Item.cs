@@ -9,6 +9,7 @@ public class Item : MonoBehaviour
     [SerializeField] Data_Item _data;
     [SerializeField] Transform _markPos;
 
+    [SerializeField] Transform _FollowTf;
     ItemMark _itemMark;
     Rigidbody _rb;
     MeshCollider _col;
@@ -23,8 +24,20 @@ public class Item : MonoBehaviour
         _itemMark = ResourcesMgr.Inst.Spawn<ItemMark>(EResourcePath.UI);
         _itemMark.SetMark(_markPos == null ? transform : _markPos);
     }
+    private void FixedUpdate()
+    {
+        if (_FollowTf != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, _FollowTf.position, 20f * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, _FollowTf.rotation, 20f * Time.fixedDeltaTime);
+        }
+    }
+    private void Update()
+    {
+        
+    }
 
-    public virtual Data_Item GetData()
+    public Data_Item GetData()
     {
         return _data;
     }
