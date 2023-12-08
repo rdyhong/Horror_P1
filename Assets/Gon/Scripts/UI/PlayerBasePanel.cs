@@ -71,9 +71,12 @@ public class PlayerBasePanel : UIRoot
 
         if (InputMgr.KeyDown(KeyCode.Tab))
         {
-            if (!UIMgr.Inst.IsPanelOpened<InventoryPanel>())
+            if(UIMgr.Inst.IsLastPanel<PlayerBasePanel>())
             {
-                UIMgr.Inst.Push<InventoryPanel>();
+                if (!UIMgr.Inst.IsPanelOpened<InventoryPanel>())
+                {
+                    UIMgr.Inst.Push<InventoryPanel>();
+                }
             }
         }
     }
