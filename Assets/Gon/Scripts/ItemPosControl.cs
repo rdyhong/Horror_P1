@@ -25,7 +25,6 @@ public class ItemPosControl : MonoBehaviour
                 Vector3 nextPos = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z - targetZ);
                 if (nextPos.z < 0) nextPos.z = 0;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, nextPos, 10f * Time.fixedDeltaTime);
-                
             }
             else
             {

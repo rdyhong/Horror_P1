@@ -46,6 +46,7 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
 
         go.GetComponent<PoolObject>().Spawn();
         go.SetActive(true);
+
         return go.GetComponent<T>();
     }
 
@@ -56,6 +57,12 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
 
         go.transform.position = new Vector3(0, 1000, 0);
         go.SetActive(false);
+
+        if (!_pooledObject.ContainsKey(name))
+        {
+            _pooledObject[name] = new Queue<GameObject>();
+            _usingObject[name] = new List<GameObject>();
+        }
 
         _pooledObject[name].Enqueue(go);
         _usingObject[name].Remove(go);

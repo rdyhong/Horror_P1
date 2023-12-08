@@ -3,11 +3,13 @@ using UnityEngine;
 public static class PlayerPrefsHelper
 {
     // PlayerPrefs key
-    public const string PPKEY_MOUSE_SENSITIVE_X = "MouseSensitiveX";
-    public const string PPKEY_MOUSE_SENSITIVE_Y = "MouseSensitiveY";
-    public const string PPKEY_SCREEN_FOV = "ScreenFov";
+    public const string PPKEY_MOUSE_SENSITIVE_X = "PPKEYMouseSensitiveX";
+    public const string PPKEY_MOUSE_SENSITIVE_Y = "PPKEYMouseSensitiveY";
+    public const string PPKEY_SCREEN_FOV = "PPKEYScreenFov";
+    public const string PPKEY_OWNED_ITEM = "PPKEYOwnedItem";
+    public const string PPKEY_ON_HAND_ITEM = "PPKEYOnHandItem";
 
-    // Base value for empty key
+    // Defalut value for empty key
     const float DEFAULT_VALUE_MOUSE_SENSITIVE_X = 2;
     const float DEFAULT_VALUE_MOUSE_SENSITIVE_Y = 2;
     const float DEFAULT_VALUE_SCREEN_FOV = 75;

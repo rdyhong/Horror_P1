@@ -3,23 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : PoolObject
 {
     [SerializeField] int Index = -1;
     [SerializeField] Data_Item _data;
     [SerializeField] Transform _markPos;
 
-    [SerializeField] Transform _FollowTf;
+    Transform _FollowTf;
     ItemMark _itemMark;
     Rigidbody _rb;
-    MeshCollider _col;
+    BoxCollider _col;
 
     bool _isPlayerOwned = false;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _col = GetComponent<MeshCollider>();
+        _col = GetComponent<BoxCollider>();
 
         _itemMark = ResourcesMgr.Inst.Spawn<ItemMark>(EResourcePath.UI);
         _itemMark.SetMark(_markPos == null ? transform : _markPos);
@@ -31,10 +31,6 @@ public class Item : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, _FollowTf.position, 20f * Time.fixedDeltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, _FollowTf.rotation, 20f * Time.fixedDeltaTime);
         }
-    }
-    private void Update()
-    {
-        
     }
 
     public Data_Item GetData()
@@ -48,12 +44,9 @@ public class Item : MonoBehaviour
         if (_isPlayerOwned) return null;
         _isPlayerOwned = true;
 
-        //_rb.isKinematic = true;
         _col.enabled = false;
-
-        transform.SetParent(parent);
-        transform.localPosition = Vector3.zero;
-        transform.localEulerAngles = Vector3.zero;
+        transform.SetParent(null);
+        _FollowTf = parent;
 
         DebugUtil.LogAssert(_data != null, "Item data is Null");
         DebugUtil.Log($"Item Gain ({name})");
@@ -64,7 +57,7 @@ public class Item : MonoBehaviour
     public virtual void Dump()
     {
         _isPlayerOwned = false;
-
+        _FollowTf = null;
         transform.SetParent(null);
         _rb.isKinematic = false;
         _col.enabled = true;
