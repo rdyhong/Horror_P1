@@ -7,8 +7,8 @@ public class GameInstance : Singleton<GameInstance>
     public static PlayerController PlayerController => _playerController;
     static PlayerController _playerController = null;
 
-    public static List<Item> OwnedItems => _ownedItems;
-    static List<Item> _ownedItems = new List<Item>();
+    public static ItemData ItemData => _itemData;
+    static ItemData _itemData = new ItemData();
 
     protected override void Awake()
     {
@@ -37,15 +37,4 @@ public class GameInstance : Singleton<GameInstance>
         if (PlayerController == null) return null;
         else return PlayerController.transform;
     }
-
-    void LoadOwnedItem()
-    {
-
-    }
-    void SaveOwnedItem()
-    {
-
-    }
-
-    
 }

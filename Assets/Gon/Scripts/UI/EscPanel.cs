@@ -34,11 +34,11 @@ public class EscPanel : UIRoot
         _sliderSensitiveY.value = UserData.s_MouseSensitiveY;
 
         _sliderSensitiveX.onValueChanged.AddListener((value) => {
-            PlayerPrefsHelper.SaveFltData(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X, value);
+            PlayerPrefsHelper.SaveFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X, value);
             UserData.RefreshData();
         });
         _sliderSensitiveY.onValueChanged.AddListener((value) => {
-            PlayerPrefsHelper.SaveFltData(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y, value);
+            PlayerPrefsHelper.SaveFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y, value);
             UserData.RefreshData();
         });
     }

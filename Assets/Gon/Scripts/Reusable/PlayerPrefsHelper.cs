@@ -7,7 +7,7 @@ public static class PlayerPrefsHelper
     public const string PPKEY_MOUSE_SENSITIVE_X = "PPKEYMouseSensitiveX";
     public const string PPKEY_MOUSE_SENSITIVE_Y = "PPKEYMouseSensitiveY";
     public const string PPKEY_SCREEN_FOV = "PPKEYScreenFov";
-    public const string PPKEY_OWNED_ITEM = "PPKEYOwnedItems";
+    public const string PPKEY_OWNED_ITEMS = "PPKEYOwnedItems";
     public const string PPKEY_ON_HAND_ITEM = "PPKEYOnHandItem";
 
     // Defalut value for empty key
@@ -16,15 +16,15 @@ public static class PlayerPrefsHelper
     public const float DEFAULT_VALUE_SCREEN_FOV = 75;
 
     // Save
-    public static void SaveIntData(string key, int val)
+    public static void SaveInt(string key, int val)
     {
         PlayerPrefs.SetInt(key, val);
     }
-    public static void SaveFltData(string key, float val)
+    public static void SaveFlt(string key, float val)
     {
         PlayerPrefs.SetFloat(key, val);
     }
-    public static void SaveStrData(string key, string val)
+    public static void SaveStr(string key, string val)
     {
         PlayerPrefs.SetString(key, val);
     }
@@ -90,13 +90,13 @@ public static class PlayerPrefsHelper
         switch(key)
         {
             case PPKEY_MOUSE_SENSITIVE_X:
-                SaveFltData(PPKEY_MOUSE_SENSITIVE_X, DEFAULT_VALUE_MOUSE_SENSITIVE_X);
+                SaveFlt(PPKEY_MOUSE_SENSITIVE_X, DEFAULT_VALUE_MOUSE_SENSITIVE_X);
                 break;
             case PPKEY_MOUSE_SENSITIVE_Y:
-                SaveFltData(PPKEY_MOUSE_SENSITIVE_Y, DEFAULT_VALUE_MOUSE_SENSITIVE_Y);
+                SaveFlt(PPKEY_MOUSE_SENSITIVE_Y, DEFAULT_VALUE_MOUSE_SENSITIVE_Y);
                 break;
             case PPKEY_SCREEN_FOV:
-                SaveFltData(key, DEFAULT_VALUE_SCREEN_FOV);
+                SaveFlt(key, DEFAULT_VALUE_SCREEN_FOV);
                 break;
             default:
                 DebugUtil.LogErr($"Unsinged Key ({key})");
