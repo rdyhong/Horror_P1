@@ -11,25 +11,22 @@ public static class PlayerPrefsHelper
     public const string PPKEY_ON_HAND_ITEM = "PPKEYOnHandItem";
 
     // Defalut value for empty key
-    const float DEFAULT_VALUE_MOUSE_SENSITIVE_X = 2;
-    const float DEFAULT_VALUE_MOUSE_SENSITIVE_Y = 2;
-    const float DEFAULT_VALUE_SCREEN_FOV = 75;
+    public const float DEFAULT_VALUE_MOUSE_SENSITIVE_X = 2;
+    public const float DEFAULT_VALUE_MOUSE_SENSITIVE_Y = 2;
+    public const float DEFAULT_VALUE_SCREEN_FOV = 75;
 
     // Save
     public static void SaveIntData(string key, int val)
     {
         PlayerPrefs.SetInt(key, val);
-        UserData.RefreshData();
     }
     public static void SaveFltData(string key, float val)
     {
         PlayerPrefs.SetFloat(key, val);
-        UserData.RefreshData();
     }
     public static void SaveStrData(string key, string val)
     {
         PlayerPrefs.SetString(key, val);
-        UserData.RefreshData();
     }
     public static void SaveIntArr(string key, int[] val)
     {
@@ -50,24 +47,26 @@ public static class PlayerPrefsHelper
     // Load
     public static int GetInt(string key)
     {
-        if(!IsKeyExist(key)) SetBaseValue(key);
+        if (!IsKeyExist(key)) return int.MinValue;
 
         return PlayerPrefs.GetInt(key);
     }
     public static float GetFlt(string key)
     {
-        if (!IsKeyExist(key)) SetBaseValue(key);
+        if (!IsKeyExist(key)) return float.MinValue;
 
         return PlayerPrefs.GetFloat(key);
     }
     public static string GetStr(string key)
     {
-        if (!IsKeyExist(key)) SetBaseValue(key);
+        if (!IsKeyExist(key)) return string.Empty;
 
         return PlayerPrefs.GetString(key);
     }
     public static int[] GetIntArr(string key)
     {
+        if (!IsKeyExist(key)) return null;
+
         string[] dataArr = PlayerPrefs.GetString(key).Split(','); // PlayerPrefs에서 불러온 값을 Split 함수를 통해 문자열의 ,로 구분하여 배열에 저장
 
         return new int[dataArr.Length];

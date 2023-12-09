@@ -24,8 +24,11 @@ public static class UserData
 
     public static void RefreshData()
     {
-        _mouseSensitiveX = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
-        _mouseSensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
-        _screenFov = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_SCREEN_FOV);
+        _mouseSensitiveX = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X) == float.MinValue ?
+            PlayerPrefsHelper.DEFAULT_VALUE_MOUSE_SENSITIVE_X : PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
+        _mouseSensitiveY = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y) == float.MinValue ?
+            PlayerPrefsHelper.DEFAULT_VALUE_MOUSE_SENSITIVE_Y : PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
+        _screenFov = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_SCREEN_FOV) == float.MinValue ?
+            PlayerPrefsHelper.DEFAULT_VALUE_SCREEN_FOV : PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_SCREEN_FOV);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemMgr : Singleton<ItemMgr>
@@ -18,7 +19,14 @@ public class ItemMgr : Singleton<ItemMgr>
 
     void Init()
     {
+        // Get saved owned item
+        _ownedItems = PlayerPrefsHelper.GetIntArr(PlayerPrefsHelper.PPKEY_OWNED_ITEM).ToList();
+        _onHandItem = PlayerPrefsHelper.GetInt(PlayerPrefsHelper.PPKEY_ON_HAND_ITEM);
+    }
 
+    public void AddItem(int idx)
+    {
+        _ownedItems.Add(idx);
     }
 
     public T GetItemObject<T>() where T : Object

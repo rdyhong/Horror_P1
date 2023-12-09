@@ -30,14 +30,16 @@ public class EscPanel : UIRoot
         _btnSetting.onClick.AddListener(() => { OnClickSetting(); });
         _btnExit.onClick.AddListener(() => { OnClickExit(); });
 
-        _sliderSensitiveX.value = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
-        _sliderSensitiveY.value = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
+        _sliderSensitiveX.value = UserData.s_MouseSensitiveX;
+        _sliderSensitiveY.value = UserData.s_MouseSensitiveY;
 
         _sliderSensitiveX.onValueChanged.AddListener((value) => {
             PlayerPrefsHelper.SaveFltData(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X, value);
+            UserData.RefreshData();
         });
         _sliderSensitiveY.onValueChanged.AddListener((value) => {
             PlayerPrefsHelper.SaveFltData(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y, value);
+            UserData.RefreshData();
         });
     }
 
@@ -48,8 +50,8 @@ public class EscPanel : UIRoot
         InputMgr.StopPlayerMove(true);
         Time.timeScale = 0;
 
-        _sliderSensitiveX.value = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_X);
-        _sliderSensitiveY.value = PlayerPrefsHelper.GetFlt(PlayerPrefsHelper.PPKEY_MOUSE_SENSITIVE_Y);
+        _sliderSensitiveX.value = UserData.s_MouseSensitiveX;
+        _sliderSensitiveY.value = UserData.s_MouseSensitiveY;
     }
 
     public override void Pop()
