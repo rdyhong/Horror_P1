@@ -30,18 +30,18 @@ public static class PlayerPrefsHelper
     }
     public static void SaveIntArr(string key, int[] val)
     {
-        string strArr = string.Empty; // 문자열 생성
+        string strArr = string.Empty;
 
-        for (int i = 0; i < val.Length; i++) // 배열과 ','를 번갈아가며 tempStr에 저장
+        for (int i = 0; i < val.Length; i++)
         {
             strArr = strArr + val[i];
-            if (i < val.Length - 1) // 최대 길이의 -1까지만 ,를 저장
+            if (i < val.Length - 1)
             {
                 strArr = strArr + ",";
             }
         }
 
-        PlayerPrefs.SetString(key, strArr); // PlyerPrefs에 문자열 형태로 저장
+        PlayerPrefs.SetString(key, strArr);
     }
 
     // Load
@@ -65,9 +65,9 @@ public static class PlayerPrefsHelper
     }
     public static int[] GetIntArr(string key)
     {
-        if (!IsKeyExist(key)) return null;
+        if (!IsKeyExist(key)) return new int[0];
 
-        string[] dataArr = PlayerPrefs.GetString(key).Split(','); // PlayerPrefs에서 불러온 값을 Split 함수를 통해 문자열의 ,로 구분하여 배열에 저장
+        string[] dataArr = PlayerPrefs.GetString(key).Split(',');
 
         return new int[dataArr.Length];
     }

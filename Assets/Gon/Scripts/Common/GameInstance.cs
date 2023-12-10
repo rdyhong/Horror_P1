@@ -8,13 +8,19 @@ public class GameInstance : Singleton<GameInstance>
     static PlayerController _playerController = null;
 
     public static ItemData ItemData => _itemData;
-    static ItemData _itemData = new ItemData();
+    static ItemData _itemData;// = new ItemData();
 
     protected override void Awake()
     {
         base.Awake();
 
+        _itemData = new ItemData();
         UserData.Init();
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void SetPlayer(PlayerController pc)
