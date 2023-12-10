@@ -22,9 +22,18 @@ public class ItemData
         _onHandItem = PlayerPrefsHelper.GetInt(PlayerPrefsHelper.PPKEY_ON_HAND_ITEM);
     }
 
-    public void AddItem(int idx)
+    public void AddOwnItem(int idx)
     {
         _ownedItems.Add(idx);
+
+        SaveItemData();
+    }
+
+    public void SetOnHandItem(int idx = -1)
+    {
+        _onHandItem = idx;
+
+        SaveItemData();
     }
 
     public void SaveItemData()

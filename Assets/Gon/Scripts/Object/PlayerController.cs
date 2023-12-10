@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     RaycastHit _playerHeighthit;
 
+    InteractableObject _usingObj = null;
+
     public bool IsFindObject => _isFindObject;
     bool _isFindObject = false;
 
@@ -132,7 +134,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    InteractableObject _usingObj = null;
     void RayCheck()
     {
         RaycastHit hit;
@@ -158,7 +159,6 @@ public class PlayerController : MonoBehaviour
                 InteractableObject obj = hit.transform.GetComponent<InteractableObject>();
                 if (obj != null)
                 {
-                    //InputMgr.StopPlayerMove(true);
                     _usingObj = obj;
                     _usingObj.OnEnter();
                 }
@@ -173,7 +173,6 @@ public class PlayerController : MonoBehaviour
         {
             _usingObj.OnExit();
             _usingObj = null;
-            //InputMgr.StopPlayerMove(false);
         }
 
         
@@ -192,13 +191,5 @@ public class PlayerController : MonoBehaviour
         {
             _isFindObject = false;
         }
-
-        /*
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            _onHandItem.Dump();
-            _onHandItem = null;
-        }
-        */
     }
 }
