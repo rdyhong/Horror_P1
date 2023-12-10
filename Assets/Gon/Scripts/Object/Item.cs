@@ -11,14 +11,12 @@ public class Item : InteractableObject, IPoolObject
 
     Transform _FollowTf;
     ItemMark _itemMark;
-    Rigidbody _rb;
     BoxCollider _col;
 
     bool _isPlayerOwned = false;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
         _col = GetComponent<BoxCollider>();
 
         _itemMark = ResourcesMgr.Inst.Spawn<ItemMark>(EResourcePath.UI);
@@ -36,6 +34,22 @@ public class Item : InteractableObject, IPoolObject
     public Data_Item GetData()
     {
         return _data;
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+
+    }
+    public override void OnUse()
+    {
+        base.OnUse();
+
+    }
+    public override void OnExit()
+    {
+        base.OnExit();
+
     }
 
     // 획득
@@ -59,7 +73,6 @@ public class Item : InteractableObject, IPoolObject
         _isPlayerOwned = false;
         _FollowTf = null;
         transform.SetParent(null);
-        _rb.isKinematic = false;
         _col.enabled = true;
     }
 
