@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioEffect : PoolObject
+public class AudioEffect : MonoBehaviour, IPoolObject
 {
     [SerializeField] AudioSource _audioSource;
 
@@ -12,8 +12,12 @@ public class AudioEffect : PoolObject
         Invoke(nameof(Recycle), clip.length);
     }
 
-    public override void Recycle()
+    public void Spawn()
+    {
+    }
+    public void Recycle()
     {
         ResourcesMgr.Inst.Recycle(this.gameObject);
     }
+
 }

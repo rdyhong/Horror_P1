@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : PoolObject
+public class Item : InteractableObject, IPoolObject
 {
     [SerializeField] int Index = -1;
     [SerializeField] Data_Item _data;
@@ -63,4 +63,13 @@ public class Item : PoolObject
         _col.enabled = true;
     }
 
+    public void Spawn()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Recycle()
+    {
+        ResourcesMgr.Inst.Recycle(this.gameObject);
+    }
 }

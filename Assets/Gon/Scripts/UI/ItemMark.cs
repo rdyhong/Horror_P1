@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemMark : PoolObject
+public class ItemMark : MonoBehaviour, IPoolObject
 {
     [SerializeField] CanvasGroup _canvasGroup;
     [SerializeField] Transform _baseMarkTf;
@@ -10,6 +10,14 @@ public class ItemMark : PoolObject
     float _markMoveSpeed = 0.1f;
     float _markTopYPos = 0f;
     float _markDownYPos = 0f;
+
+    public void Spawn()
+    {
+    }
+    public void Recycle()
+    {
+        ResourcesMgr.Inst.Recycle(this.gameObject);
+    }
 
     public void SetMark(Transform tf)
     {
@@ -22,6 +30,7 @@ public class ItemMark : PoolObject
 
         StartCoroutine(BaseCycleCo());
     }
+
 
     IEnumerator BaseCycleCo()
     {

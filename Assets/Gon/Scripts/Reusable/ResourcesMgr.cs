@@ -44,7 +44,7 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
 
         _usingObject[name].Add(go);
 
-        go.GetComponent<PoolObject>().Spawn();
+        go.GetComponent<IPoolObject>().Spawn();
         go.SetActive(true);
 
         return go.GetComponent<T>();

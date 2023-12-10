@@ -2,15 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PoolObject : MonoBehaviour
+public interface IPoolObject
 {
-    public virtual void Spawn()
-    {
+    void Spawn();
 
-    }
-
-    public virtual void Recycle()
-    {
-
-    }
+    void Recycle();
 }
