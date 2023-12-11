@@ -39,7 +39,7 @@ public class Item : InteractableObject, IPoolObject
     public override void OnEnter()
     {
         base.OnEnter();
-
+        Obtain();
     }
     public override void OnUse()
     {
@@ -53,15 +53,16 @@ public class Item : InteractableObject, IPoolObject
     }
 
     // 획득
-    public virtual Data_Item Obtain(Transform parent)
+    public virtual Data_Item Obtain()
     {
         if (_isPlayerOwned) return null;
         _isPlayerOwned = true;
 
         _col.enabled = false;
-        transform.SetParent(null);
-        _FollowTf = parent;
-
+        _markPos.gameObject.SetActive(false);
+        //transform.SetParent(null);
+        //_FollowTf = parent;
+        _FollowTf = GameInstance.PlayerController.OnHandTf;
         DebugUtil.LogAssert(_data != null, "Item data is Null");
         DebugUtil.Log($"Item Gain ({name})");
         return _data;

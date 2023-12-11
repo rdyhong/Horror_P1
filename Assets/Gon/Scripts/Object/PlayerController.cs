@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     RaycastHit _playerHeighthit;
 
     InteractableObject _usingObj = null;
+    public Transform OnHandTf => _handItemPosition;
 
     public bool IsFindObject => _isFindObject;
     bool _isFindObject = false;
@@ -138,32 +139,12 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(_cameraPosTf.position, _cameraPosTf.forward * GameDef.PLAYER_SIGHT_RAY_LENGTH, Color.red);
-        /*
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (Physics.Raycast(_cameraPosTf.position, _cameraPosTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
-            {
-                Item item = hit.transform.GetComponent<Item>();
-                if (item != null && _onHandItem == null)
-                {
-                    _onHandItem = item;
-                    _onHandItem.Obtain(_handItemPosition);
-                }
-            }
-        }
-        */
+
         if (InputMgr.LMouseDown())
         {
             if (Physics.Raycast(_cameraPosTf.position, _cameraPosTf.forward, out hit, GameDef.PLAYER_SIGHT_RAY_LENGTH))
             {
                 DebugUtil.Log($"{hit.transform.name}");
-                Item item = hit.transform.GetComponent<Item>();
-                if (item != null && _onHandItem == null)
-                {
-                    _onHandItem = item;
-                    _onHandItem.Obtain(_handItemPosition);
-                    return;
-                }
 
                 InteractableObject obj = hit.transform.GetComponent<InteractableObject>();
                 if (obj != null)
@@ -200,5 +181,10 @@ public class PlayerController : MonoBehaviour
         {
             _isFindObject = false;
         }
+    }
+
+    public void SetOnHandItem(Item item)
+    {
+        _onHandItem = item;
     }
 }
