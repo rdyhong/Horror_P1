@@ -8,15 +8,11 @@ public class Door : InteractableObject
     [SerializeField] float _closeAngle = 0f;
     [SerializeField] float _maxOpenAngle = 90f;
     [SerializeField] float _shortOpenAngle = 10f;
-
+    [SerializeField] bool _isLock = false;
     
-    BoxCollider _boxCol;
-    Rigidbody _rb;
-
     int _step = -1;
     int _nextStep = -1;
     int _prevStep = -1;
-    int _prevStepCollision = -1;
 
     float _curTargetAngle = 0;
     float _slowMoveSpeed = 2f;
@@ -25,19 +21,10 @@ public class Door : InteractableObject
     bool _isOpen = false;
     bool _isMoveSlow = true;
     bool _isOverDistance = false;
-    bool _isPlayerOnCol = false;
-
-    private void Awake()
-    {
-        _boxCol = GetComponent<BoxCollider>();
-        _rb = GetComponent<Rigidbody>();
-    }
 
     private void Update()
     {
         if (_step == -1) return;
-
-        if (_isPlayerOnCol) return;
 
         if(_step == 0) // Do Close
         {
@@ -117,30 +104,5 @@ public class Door : InteractableObject
         _step = _nextStep;
         if (_step == 1) _isOpen = true;
         else if (_step == 0 || _step == 2) _isOpen = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == GameDef.PLAYER_TAG)
-        {
-            //_isPlayerOnCol = true;
-        }
-        
-    }
-    private void OnCollisionStay(Collision collision)
-    {
-
-        if(collision.transform.tag == GameDef.PLAYER_TAG)
-        {
-            //_isPlayerOnCol = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.transform.tag == GameDef.PLAYER_TAG)
-        {
-            //_isPlayerOnCol = false;
-        }
     }
 }

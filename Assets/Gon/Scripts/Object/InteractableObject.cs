@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class InteractableObject : MonoBehaviour
 {
-    protected bool _isLock = false;
     protected bool _isUsing = false;
+
+    [SerializeField] int[] CombinableKey;
 
     public virtual void OnEnter()
     {
