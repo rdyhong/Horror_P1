@@ -3,10 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum User_Language
+{
+    EN,
+    KR,
+}
 public static class UserData
 {
     static bool _isLoaded = false;
 
+    public static User_Language s_language => _language;
+    static User_Language _language = User_Language.EN;
     public static float s_MouseSensitiveX => _mouseSensitiveX;
     static float _mouseSensitiveX = 0;
     public static float s_MouseSensitiveY => _mouseSensitiveY;

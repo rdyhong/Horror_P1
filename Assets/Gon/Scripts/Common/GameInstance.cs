@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameInstance : Singleton<GameInstance>
 {
+    public static int MainStep = 0;
     public static PlayerController PlayerController => _playerController;
     static PlayerController _playerController = null;
 

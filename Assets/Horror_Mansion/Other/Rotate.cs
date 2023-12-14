@@ -7,11 +7,6 @@ public class Rotate : MonoBehaviour {
     public float y;
     public float z;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
 	// Update is called once per frame
 	void Update () {
  

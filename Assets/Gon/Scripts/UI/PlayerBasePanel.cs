@@ -85,7 +85,7 @@ public class PlayerBasePanel : UIRoot
     IEnumerator SubTitleQueControl()
     {
         _subTitleAlpha.alpha = 0;
-        float alphaSpeed = 0.5f;
+        float alphaSpeed = 1f;
         float nextAlphaValue = 0;
 
         while (true)

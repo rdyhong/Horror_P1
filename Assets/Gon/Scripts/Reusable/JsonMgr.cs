@@ -21,7 +21,11 @@ public class JsonMgr : Singleton<JsonMgr>
         string name = typeof(T).Name;
         TextAsset textData = Resources.Load($"JsonData/{name}") as TextAsset;
 
-        if (textData == null) return null;
+        if (textData == null)
+        {
+            DebugUtil.LogErr($"Json load fail({name})");
+            return null;
+        }
 
         DebugUtil.Log($"{textData.text}");
         
@@ -31,11 +35,8 @@ public class JsonMgr : Singleton<JsonMgr>
     void SaveData<T>(object data)
     {
         string name = typeof(T).Name;
-        // ToJson�� ����ϸ� JSON���·� �����õ� ���ڿ��� �����ȴ�  
         string jsonData = JsonUtility.ToJson(data);
-        // �����͸� ������ ��� ����
         string path = Path.Combine(Application.dataPath, $"{name}.json");
-        // ���� ���� �� ����
         File.WriteAllText(path, jsonData);
     }
 }
