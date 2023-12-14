@@ -16,10 +16,12 @@ public class JsonMgr : Singleton<JsonMgr>
         _item_json = LoadData<Item_Json>();
     }
 
-    T LoadData<T>()
+    T LoadData<T>() where T : class
     {
         string name = typeof(T).Name;
         TextAsset textData = Resources.Load($"JsonData/{name}") as TextAsset;
+
+        if (textData == null) return null;
 
         DebugUtil.Log($"{textData.text}");
         
