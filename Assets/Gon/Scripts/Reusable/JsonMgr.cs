@@ -7,54 +7,62 @@ using Newtonsoft.Json;
 
 public class JsonMgr : Singleton<JsonMgr>
 {
-    public Dictionary<int, Data_Item> data_Items = new Dictionary<int, Data_Item>();
+    Item_Json _item_json;
+    Dialogue_Story_Json _dialogue_story;
 
     public void Init()
     {
-        data_Items = LoadData<Data_Item>();
-
-        foreach(int key in data_Items.Keys)
-        {
-            DebugUtil.Log($"{data_Items[key].Name_KR}");
-        }
+        _dialogue_story = LoadData<Dialogue_Story_Json>();
+        _item_json = LoadData<Item_Json>();
     }
 
-    Dictionary<int, T> LoadData<T>()
+    T LoadData<T>()
     {
         string name = typeof(T).Name;
-        // µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Ã °æ·Î ÁöÁ¤
-        //string path = Path.Combine(Application.dataPath, $"{name}.json");
-        // ÆÄÀÏÀÇ ÅØ½ºÆ®¸¦ stringÀ¸·Î ÀúÀå
         TextAsset textData = Resources.Load($"JsonData/{name}") as TextAsset;
 
         DebugUtil.Log($"{textData.text}");
-        //string jsonData = File.ReadAllText(path);
-        // ÀÌ Jsonµ¥ÀÌÅÍ¸¦ ¿ªÁ÷·ÄÈ­ÇÏ¿© playerData¿¡ ³Ö¾îÁÜ
-        //T[] val = JsonUtility.FromJson<T[]>(textData.ToString());
-        //JsonConvert.DeserializeObject < Dictionary<int, T>>(textData.ToString());
-        Dictionary<int, T> val = JsonConvert.DeserializeObject<Dictionary<int, T>>(textData.text);
-
-        return val;
+        
+        return JsonUtility.FromJson<T>(textData.text);
     }
 
     void SaveData<T>(object data)
     {
         string name = typeof(T).Name;
-        // ToJsonÀ» »ç¿ëÇÏ¸é JSONÇüÅÂ·Î Æ÷¸äÆÃµÈ ¹®ÀÚ¿­ÀÌ »ý¼ºµÈ´Ù  
+        // ToJsonï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ JSONï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½È´ï¿½  
         string jsonData = JsonUtility.ToJson(data);
-        // µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ °æ·Î ÁöÁ¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         string path = Path.Combine(Application.dataPath, $"{name}.json");
-        // ÆÄÀÏ »ý¼º ¹× ÀúÀå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         File.WriteAllText(path, jsonData);
     }
 }
 
 [Serializable]
-public class Data_Item
+public class Item_Json
 {
+    public Item_Data[] Item;
+}
+[Serializable]
+public class Item_Data
+{
+    public int Id;
     public string Name_KR = string.Empty;
     public string Name_EN = string.Empty;
     public bool Consumable;
-    public int[] ConbinableKey;
+    public int CombinableKey;
     public bool Holdable;
+}
+
+[Serializable]
+public class Dialogue_Story_Json
+{
+    public Dialogue_Story_Data[] Dialogue_Story;
+}
+[Serializable]
+public class Dialogue_Story_Data
+{
+    public int Id;
+    public string EN;
+    public string KR;
 }

@@ -15,6 +15,7 @@ public class GameInstance : Singleton<GameInstance>
         base.Awake();
 
         _itemData = new ItemData();
+        JsonMgr.Inst.Init();
         UserData.Init();
     }
 

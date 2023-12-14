@@ -6,7 +6,7 @@ using UnityEngine;
 public class Item : InteractableObject, IPoolObject
 {
     [SerializeField] int Index = -1;
-    [SerializeField] Data_Item _data;
+    [SerializeField] Item_Data _data;
     [SerializeField] Transform _markPos;
 
     Transform _FollowTf;
@@ -31,11 +31,6 @@ public class Item : InteractableObject, IPoolObject
         }
     }
 
-    public Data_Item GetData()
-    {
-        return _data;
-    }
-
     public override void OnEnter()
     {
         base.OnEnter();
@@ -53,7 +48,7 @@ public class Item : InteractableObject, IPoolObject
     }
 
     // 획득
-    public virtual Data_Item Obtain()
+    public virtual Item_Data Obtain()
     {
         if (_isPlayerOwned) return null;
         _isPlayerOwned = true;
