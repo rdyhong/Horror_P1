@@ -16,7 +16,6 @@ public class ItemMark : MonoBehaviour, IPoolObject
     }
     public void Recycle()
     {
-        ResourcesMgr.Inst.Recycle(this.gameObject);
     }
 
     public void SetMark(Transform tf)

@@ -79,6 +79,5 @@ public class Item : InteractableObject, IPoolObject
 
     public void Recycle()
     {
-        ResourcesMgr.Inst.Recycle(this.gameObject);
     }
 }

@@ -17,7 +17,6 @@ public class AudioEffect : MonoBehaviour, IPoolObject
     }
     public void Recycle()
     {
-        ResourcesMgr.Inst.Recycle(this.gameObject);
     }
 
 }

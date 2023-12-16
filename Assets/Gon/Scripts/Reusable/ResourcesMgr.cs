@@ -66,6 +66,8 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
 
         _pooledObject[name].Enqueue(go);
         _usingObject[name].Remove(go);
+
+        go.GetComponent<IPoolObject>().Recycle();
     }
 
     string GetResourcePath(EResourcePath type)
