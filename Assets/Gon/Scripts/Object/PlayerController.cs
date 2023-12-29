@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Rigidbody _rb;
-    [SerializeField] CapsuleCollider _colStand;
-    [SerializeField] CapsuleCollider _colCrouch;
+    CharacterController _characterController;
 
     [SerializeField] Transform _cameraPosTf;
     [SerializeField] Transform _handItemPosition;
-    [SerializeField] Transform _soundFootPosition;
+    [SerializeField] Transform _footPosition;
 
     [SerializeField] float _moveSpeed;
-
-    RaycastHit _playerHeighthit;
+    [SerializeField] float _gravity = 150f;
 
     InteractableObject _usingObj = null;
     public Transform OnHandTf => _handItemPosition;
@@ -34,20 +32,17 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        _characterController = GetComponent<CharacterController>();
+
         _cameraBaseHeight = _cameraPosTf.localPosition.y;
         GameInstance.Inst.SetPlayer(this);
 
-        Camera.main.transform.GetComponent<CameraController>().SetCameraTarget(_cameraPosTf); // Set Cam
-        _rb.isKinematic = false;
-    }
-
-    private void FixedUpdate()
-    {
-        PlayerMove();
+        //Camera.main.transform.GetComponent<CameraController>().SetCameraTarget(_cameraPosTf); // Set Cam
     }
 
     void Update()
     {
+        PlayerMove();
         PlayerRotate();
         RayCheck();
         PlayerCrouch();
@@ -63,23 +58,27 @@ public class PlayerController : MonoBehaviour
         nextPos = transform.forward * InputMgr.KeyboardAxisZ() + transform.right * InputMgr.KeyboardAxisX();
         nextPos = Vector3.ClampMagnitude(nextPos, 1) * _moveSpeed;
 
-        _rb.velocity = nextPos * Time.fixedDeltaTime;
-        _moveDistance += Vector3.Distance(_prevMoveStep, transform.position);
-        _prevMoveStep = transform.position;
+        //_rb.velocity = nextPos * Time.fixedDeltaTime;
+        
 
-        // Set height
-        Debug.DrawRay(_cameraPosTf.position + Vector3.up, -transform.up * 20, Color.red);
-        if (Physics.Raycast(transform.position + Vector3.up, -transform.up, out _playerHeighthit, 20))
+        if (!_characterController.isGrounded)
         {
-            transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, _playerHeighthit.point.y + 0.1f, 0.4f), transform.position.z);
+            nextPos.y -= _gravity * Time.deltaTime;
+        }
+        else
+        {
+            // Foot audio
+            _moveDistance += Vector3.Distance(_prevMoveStep, transform.position);
+            _prevMoveStep = transform.position;
+            
+            if (_moveDistance > 1)
+            {
+                _moveDistance = 0;
+                PlayFootAudio();
+            }
         }
 
-        // Foot audio
-        if (_moveDistance > 1)
-        {
-            _moveDistance = 0;
-            PlayFootAudio();
-        }
+        _characterController.Move(nextPos * Time.deltaTime);
     }
 
     void PlayerRotate()
@@ -97,21 +96,22 @@ public class PlayerController : MonoBehaviour
 
     void PlayerCrouch()
     {
+        float smooth = 5f;
         if (InputMgr.KeyHold(KeyCode.LeftControl))
         {
-            _colStand.enabled = false;
-            _colCrouch.enabled = true;
+            _characterController.height = Mathf.Lerp(_characterController.height, 0.9f, smooth * Time.deltaTime);
+            _characterController.center = Vector3.Lerp(_characterController.center, new Vector3(0, 0.5f, 0), smooth * Time.deltaTime);
 
             _cameraPosTf.localPosition = Vector3.Lerp(_cameraPosTf.localPosition,
-                new Vector3(_cameraPosTf.localPosition.x, _cameraBaseHeight - 0.8f, _cameraPosTf.localPosition.z), 3 * Time.deltaTime);
+                new Vector3(_cameraPosTf.localPosition.x, _cameraBaseHeight - 0.8f, _cameraPosTf.localPosition.z), smooth * Time.deltaTime);
         }
         else
         {
-            _colStand.enabled = true;
-            _colCrouch.enabled = false;
+            _characterController.height = Mathf.Lerp(_characterController.height, 1.7f, smooth * Time.deltaTime);
+            _characterController.center = Vector3.Lerp(_characterController.center, new Vector3(0, 0.9f, 0), smooth * Time.deltaTime);
 
             _cameraPosTf.localPosition = Vector3.Lerp(_cameraPosTf.localPosition,
-                new Vector3(_cameraPosTf.localPosition.x, _cameraBaseHeight, _cameraPosTf.localPosition.z), 3 * Time.deltaTime);
+                new Vector3(_cameraPosTf.localPosition.x, _cameraBaseHeight, _cameraPosTf.localPosition.z), smooth * Time.deltaTime);
         }
     }
 
@@ -123,15 +123,15 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(rayStartPos, -transform.up, out hit, rayRange, 1 << LayerMask.NameToLayer("GroundWood")))
         {
-            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Wood, _soundFootPosition.position);
+            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Wood, _footPosition.position);
         }
         else if (Physics.Raycast(rayStartPos, -transform.up, out hit, rayRange, 1 << LayerMask.NameToLayer("GroundRock")))
         {
-            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Rock, _soundFootPosition.position);
+            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Rock, _footPosition.position);
         }
         else if (Physics.Raycast(rayStartPos, -transform.up, out hit, rayRange, 1 << LayerMask.NameToLayer("GroundGrass")))
         {
-            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Grass, _soundFootPosition.position);
+            AudioMgr.Inst.PlayFootEffect(ESoundTypeFoot.Grass, _footPosition.position);
         }
     }
 

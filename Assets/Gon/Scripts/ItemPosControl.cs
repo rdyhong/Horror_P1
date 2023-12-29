@@ -13,7 +13,7 @@ public class ItemPosControl : MonoBehaviour
         basePos = transform.localPosition;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Debug.DrawRay(transform.position, transform.forward.normalized, Color.red);
         if (Physics.Raycast(transform.position, transform.forward, out _hit, 0.5f))
@@ -24,16 +24,16 @@ public class ItemPosControl : MonoBehaviour
             {
                 Vector3 nextPos = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z - targetZ);
                 if (nextPos.z < 0) nextPos.z = 0;
-                transform.localPosition = Vector3.Lerp(transform.localPosition, nextPos, 10f * Time.fixedDeltaTime);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, nextPos, 10f * Time.deltaTime);
             }
             else
             {
-                transform.localPosition = Vector3.Lerp(transform.localPosition, basePos, 10f * Time.fixedDeltaTime);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, basePos, 10f * Time.deltaTime);
             }
         }
         else
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, basePos, 10f * Time.fixedDeltaTime);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, basePos, 10f * Time.deltaTime);
         }
     }
 }

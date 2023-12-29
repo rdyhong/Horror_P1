@@ -13,7 +13,7 @@ public class JsonMgr : Singleton<JsonMgr>
     public void Init()
     {
         _dialogue_story = LoadData<Dialogue_Story_Json>();
-        _item_json = LoadData<Item_Json>();
+        //_item_json = LoadData<Item_Json>();
     }
 
     T LoadData<T>() where T : class

@@ -24,10 +24,15 @@ public class Item : InteractableObject, IPoolObject
     }
     private void FixedUpdate()
     {
+        
+    }
+
+    private void Update()
+    {
         if (_FollowTf != null)
         {
-            transform.position = Vector3.Lerp(transform.position, _FollowTf.position, 20f * Time.fixedDeltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, _FollowTf.rotation, 20f * Time.fixedDeltaTime);
+            transform.position = Vector3.Lerp(transform.position, _FollowTf.position, 50f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, _FollowTf.rotation, 50f * Time.deltaTime);
         }
     }
 

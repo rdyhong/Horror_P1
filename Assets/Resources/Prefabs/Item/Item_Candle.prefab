@@ -170,7 +170,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.05, y: 0.18, z: 0.05}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Center: {x: 0, y: 0.085, z: 0}
 --- !u!114 &5744774236270713975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,12 +183,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a29056c896b75642b83b0f4191b5727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CombinableKey: 
   Index: 0
   _data:
+    Id: 0
     Name_KR: "\uD683\uBD88"
     Name_EN: Candle
     Consumable: 0
-    ConbinableKey: 
+    CombinableKey: 0
     Holdable: 1
   _markPos: {fileID: 2886458468204749485}
 --- !u!1 &7240456992541498614
