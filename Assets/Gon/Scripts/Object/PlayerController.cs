@@ -100,14 +100,14 @@ public class PlayerController : MonoBehaviour
         if (InputMgr.KeyHold(KeyCode.LeftControl))
         {
             _characterController.height = Mathf.Lerp(_characterController.height, 0.9f, smooth * Time.deltaTime);
-            _characterController.center = Vector3.Lerp(_characterController.center, new Vector3(0, 0.5f, 0), smooth * Time.deltaTime);
+            _characterController.center = Vector3.Lerp(_characterController.center, new Vector3(0, 0.45f, 0), smooth * Time.deltaTime);
 
             _cameraPosTf.localPosition = Vector3.Lerp(_cameraPosTf.localPosition,
                 new Vector3(_cameraPosTf.localPosition.x, _cameraBaseHeight - 0.8f, _cameraPosTf.localPosition.z), smooth * Time.deltaTime);
         }
         else
         {
-            _characterController.height = Mathf.Lerp(_characterController.height, 1.7f, smooth * Time.deltaTime);
+            _characterController.height = Mathf.Lerp(_characterController.height, 1.8f, smooth * Time.deltaTime);
             _characterController.center = Vector3.Lerp(_characterController.center, new Vector3(0, 0.9f, 0), smooth * Time.deltaTime);
 
             _cameraPosTf.localPosition = Vector3.Lerp(_cameraPosTf.localPosition,
