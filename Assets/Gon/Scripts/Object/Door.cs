@@ -39,7 +39,9 @@ public class Door : InteractableObject
             _curTargetAngle = _shortOpenAngle;
         }
 
-        if (_isMoveSlow) transform.localEulerAngles = Vector3.Slerp(transform.localEulerAngles, new Vector3(transform.localEulerAngles.x, _curTargetAngle, transform.localEulerAngles.z), _slowMoveSpeed * Time.deltaTime);
+        Quaternion tgRot = Quaternion.Euler(transform.localEulerAngles.x, _curTargetAngle, transform.localEulerAngles.z);
+
+        if (_isMoveSlow) transform.localRotation = Quaternion.Slerp(transform.localRotation, tgRot, _slowMoveSpeed * Time.deltaTime);
         else transform.localEulerAngles = transform.localEulerAngles + new Vector3(transform.localEulerAngles.x, _curTargetAngle, transform.localEulerAngles.z) * 10 * Time.deltaTime;
 
         if (Mathf.Abs(transform.localEulerAngles.y - _curTargetAngle) < 0.01f)
