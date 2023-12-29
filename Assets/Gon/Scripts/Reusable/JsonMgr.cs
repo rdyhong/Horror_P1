@@ -8,12 +8,11 @@ using Newtonsoft.Json;
 public class JsonMgr : Singleton<JsonMgr>
 {
     Item_Json _item_json;
-    Dialogue_Story_Json _dialogue_story;
+    public Dialogue_Story_Json _dialogue_story;
 
     public void Init()
     {
         _dialogue_story = LoadData<Dialogue_Story_Json>();
-        //_item_json = LoadData<Item_Json>();
     }
 
     T LoadData<T>() where T : class
@@ -66,6 +65,7 @@ public class Dialogue_Story_Json
 public class Dialogue_Story_Data
 {
     public int Id;
+    public bool StartCheck;
     public string EN;
     public string KR;
 }

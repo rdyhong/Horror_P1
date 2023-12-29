@@ -18,23 +18,13 @@ public class PlayerBasePanel : UIRoot
     [SerializeField] Text _questAlertT;
     float _questAlertBaseX;
 
-    Queue<string> _subTitleQue = new Queue<string>();
-
     private void Awake()
     {
         _questAlertBaseX = _questAlertRt.anchoredPosition.x;
 
         _dotImg.color = new Color(1, 1, 1, 0);
 
-        _subTitleQue.Enqueue("Test Comment 1");
-        _subTitleQue.Enqueue("Test Comment 2");
-        _subTitleQue.Enqueue("Test Comment 3");
-        _subTitleQue.Enqueue("Test Comment 4");
-        _subTitleQue.Enqueue("Test Comment 5");
-        _subTitleQue.Enqueue("Test Comment 6");
-        _subTitleQue.Enqueue("Test Comment 7");
-
-        StartCoroutine(SubTitleQueControl());
+        StartDialogue_Story(0);
     }
 
     public override void Push()
@@ -81,9 +71,15 @@ public class PlayerBasePanel : UIRoot
         }
     }
     
-
-    IEnumerator SubTitleQueControl()
+    public void StartDialogue_Story(int idx)
     {
+        StartCoroutine(SubTitleQueControl(idx));
+    }
+
+    IEnumerator SubTitleQueControl(int idx)
+    {
+        int enterIdx = idx;
+        int curIdx = idx;
         _subTitleAlpha.alpha = 0;
         float alphaSpeed = 1f;
         float nextAlphaValue = 0;
@@ -91,9 +87,15 @@ public class PlayerBasePanel : UIRoot
         while (true)
         {
             yield return null;
-            if (_subTitleQue.Count == 0) continue;
+            if(enterIdx != curIdx)
+            {
+                if(JsonMgr.Inst._dialogue_story.Dialogue_Story[curIdx].StartCheck) // If Idx is Start Idx
+                {
+                    yield break;
+                }
+            }
 
-            _subTitleT.text = _subTitleQue.Dequeue();
+            _subTitleT.text = JsonMgr.Inst._dialogue_story.Dialogue_Story[curIdx].KR;
 
             /* ----- 자막의 사이즈를 가변으로 설정하려 했는데 실패....
             float hight = 50;
@@ -143,6 +145,8 @@ public class PlayerBasePanel : UIRoot
                     }
                 }
             }
+
+            curIdx++;
         }
     }
 }
