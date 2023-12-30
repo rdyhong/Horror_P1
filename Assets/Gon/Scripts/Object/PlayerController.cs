@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     CharacterController _characterController;
+    Animator _animator;
 
     [SerializeField] Transform _cameraPosTf;
     [SerializeField] Transform _handItemPosition;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
 
         _cameraBaseHeight = _cameraPosTf.localPosition.y;
         GameInstance.Inst.SetPlayer(this);
@@ -79,6 +81,9 @@ public class PlayerController : MonoBehaviour
         }
 
         _characterController.Move(nextPos * Time.deltaTime);
+
+        _animator.SetFloat("DirX", InputMgr.KeyboardAxisX());
+        _animator.SetFloat("DirY", InputMgr.KeyboardAxisZ());
     }
 
     void PlayerRotate()
