@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     InteractableObject _usingObj = null;
     public Transform OnHandTf => _handItemPosition;
+    public Transform FpsCameraTf => _cameraPosTf;
 
     public bool IsFindObject => _isFindObject;
     bool _isFindObject = false;
