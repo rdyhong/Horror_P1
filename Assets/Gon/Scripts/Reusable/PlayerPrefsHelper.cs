@@ -9,6 +9,7 @@ public static class PlayerPrefsHelper
     public const string PPKEY_SCREEN_FOV = "PPKEYScreenFov";
     public const string PPKEY_OWNED_ITEMS = "PPKEYOwnedItems";
     public const string PPKEY_ON_HAND_ITEM = "PPKEYOnHandItem";
+    public const string PPKEY_MAIN_STEP = "PPKEYMainStep";
 
     // Defalut value for empty key
     public const float DEFAULT_VALUE_MOUSE_SENSITIVE_X = 2;

@@ -8,21 +8,12 @@ public class GameInstance : Singleton<GameInstance>
     public static PlayerController PlayerController => _playerController;
     static PlayerController _playerController = null;
 
-    public static ItemData ItemData => _itemData;
-    static ItemData _itemData;
-
     protected override void Awake()
     {
         base.Awake();
 
-        _itemData = new ItemData();
         JsonMgr.Inst.Init();
         UserData.Init();
-    }
-
-    private void Start()
-    {
-        
     }
 
     public void SetPlayer(PlayerController pc)
@@ -33,6 +24,31 @@ public class GameInstance : Singleton<GameInstance>
         {
             UIMgr.Inst.Push<PlayerBasePanel>();
         }
+    }
+
+    public int GetMainStep()
+    {
+        int mainStep = PlayerPrefsHelper.GetInt(PlayerPrefsHelper.PPKEY_MAIN_STEP);
+
+        if(mainStep < 0)
+        {
+            PlayerPrefsHelper.SaveInt(PlayerPrefsHelper.PPKEY_MAIN_STEP, 0);
+            mainStep = 0;
+        }
+
+        return mainStep;
+    }
+
+    public void IncreaseMainStep()
+    {
+        int mainStep = PlayerPrefsHelper.GetInt(PlayerPrefsHelper.PPKEY_MAIN_STEP);
+
+        if (mainStep < 0)
+        {
+            mainStep = 0;
+        }
+
+        PlayerPrefsHelper.SaveInt(PlayerPrefsHelper.PPKEY_MAIN_STEP, mainStep + 1);
     }
 
     public static Vector3 GetPlayerPosition()
